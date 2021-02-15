@@ -41,18 +41,24 @@ class PagosController extends Controller
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
 
-        $user=User::where('email',$id_admin2->email)->first();
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
         if (!is_null($user)) {
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
-            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+            $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
         }
+
         $meses=\DB::table('meses')
             ->join('mensualidades','mensualidades.mes','=','meses.id')
             ->where('mensualidades.anio', date('Y'))
             ->select('meses.*','mensualidades.monto')
             ->groupBy('meses.id')
             ->get();
+
         $pagos=Pagos::all();
         $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
         $estacionamientos=Estacionamientos::where('id_admin',$id_admin)->get();
@@ -105,12 +111,17 @@ class PagosController extends Controller
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
 
-        $user=User::where('email',$id_admin2->email)->first();
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
         if (!is_null($user)) {
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
-            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+            $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
         }
+
         $anio=date('Y');
         $anio2=Mensualidades::where('id','<>',0)->groupBy('anio')->select('anio')->get();
         
@@ -124,12 +135,17 @@ class PagosController extends Controller
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
 
-        $user=User::where('email',$id_admin2->email)->first();
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
         if (!is_null($user)) {
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
-            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+            $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
         }
+
         $anio=date('Y');
         return $residentes;
         //return View('pagos.estados_pagos',compact('residentes','meses','anio'));
@@ -150,15 +166,21 @@ class PagosController extends Controller
         }
         // dd($id_mes);
         $meses=Meses::all();
+        
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
 
-        $user=User::where('email',$id_admin2->email)->first();
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
         if (!is_null($user)) {
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
-            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+            $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
         }
+        
         $anio=$request->anio;
 
         $pdf = PDF::loadView('reportes/PDF/EstadosPago', array(

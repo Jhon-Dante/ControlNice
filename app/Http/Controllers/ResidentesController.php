@@ -276,11 +276,15 @@ class ResidentesController extends Controller
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
 
-        $user=User::where('email',$id_admin2->email)->first();
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
         if (!is_null($user)) {
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
-            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+            $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
         }
         $estacionamientos=Estacionamientos::where('status','Libre')->where('id_admin',$id_admin)->get();
         $inmuebles=Inmuebles::where('status','Disponible')->where('id_admin',$id_admin)->get();
@@ -302,7 +306,18 @@ class ResidentesController extends Controller
     public function buscar_residente2($num)
     {
         $id_admin=id_admin(\Auth::user()->email);
-        return $residentes=Residentes::where('id','>=',$num)->where('id_admin',$id_admin)->get();
+        $id_admin2=UsersAdmin::find($id_admin);
+
+        if ($id_admin2) {
+            $user=User::where('email',$id_admin2->email)->first();
+        }else{
+            $user=null;
+        }
+        if (!is_null($user)) {
+            return $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
+        }else{
+            return $residentes=Residentes::where('id','>=',$num)->where('id_admin',$id_admin)->get();
+        }
 
         // return Residentes::where('id', $id_residente)->get();
     }

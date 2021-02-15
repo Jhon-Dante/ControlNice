@@ -37,7 +37,7 @@
                             
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <input type="number" name="verificador" min="1" id="verificador_e" minlength="1" maxlength="1" max="9" value="0" class="form-control" required>
+                                    <input type="number" name="verificador" min="0" id="verificador_e" minlength="1" maxlength="1" max="9" value="0" class="form-control" required>
                                 </div>
                             </div>
                         </div>

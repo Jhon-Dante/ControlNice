@@ -27,10 +27,16 @@ class ResidentesController extends Controller
     public function index()
     {
         $id_admin=id_admin(\Auth::user()->email);
+        $id_admin2=UsersAdmin::find($id_admin);
+
+        $user=User::where('email',$id_admin2->email)->first();
+        if (!is_null($user)) {
+            $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
+        }else{
+            $residentes=Residentes::where('id_admin',$id_admin)->orderBy('rut','ASC')->get();
+        }
         $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
         $estacionamientos=Estacionamientos::where('id_admin',$id_admin)->get();
-        $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$id_admin)->orderBy('rut','ASC')->get();
-        // dd($residentes[0]->id_usuario. ' ' .$id_admin);
         return View('residentes.index', compact('residentes','inmuebles','estacionamientos'));
     }
 

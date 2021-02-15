@@ -22,7 +22,7 @@ class InmueblesController extends Controller
         $id_admin=id_admin(\Auth::user()->email);
 		$inmuebles=Inmuebles::where('id_admin',$id_admin)->orderBy('idem','ASC')->get();;
 		$meses=Meses::all();
-		$estacionamientos=estacionamientos::where('status','Libre')->where('id_admin',$id_admin)->orderBy('idem','ASC')->get();;
+		$estacionamientos=estacionamientos::where('status','Libre')->where('id_admin',$id_admin)->orderBy('idem','ASC')->get();
 
 		return view('inmuebles.index',compact('inmuebles','meses','estacionamientos'));
 	}

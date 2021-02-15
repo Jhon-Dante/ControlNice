@@ -820,7 +820,7 @@
                                                           <div class="col-md-2">
                                                               <div class="form-group">
                                                                   <div style="float: left !important;">
-                                                                      <input type="number" name="verificador" min="1" minlength="1" maxlength="1" value="0" class="form-control" max="9" required>
+                                                                      <input type="number" name="verificador" min="0" minlength="1" maxlength="1" value="0" class="form-control" max="9" required>
                                                                   </div>
                                                               </div>
                                                           </div>

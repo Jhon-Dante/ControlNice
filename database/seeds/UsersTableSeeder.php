@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             'rut' => '123456789',
             'email' => 'admin1@controlnice.cl',
             'id_membresia' => 3,
-            'created_at' => '2020-12-01 20:04:15'
+            // 'created_at' => '2020-12-01 20:04:15'
         ]);
 
         \DB::table('users')->insert([

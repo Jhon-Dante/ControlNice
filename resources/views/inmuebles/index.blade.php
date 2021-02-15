@@ -149,12 +149,12 @@
                                     @if($key->status == 'Disponible')
                                         <td style="position: all;">
                                                 <span class="tituloTabla text-success"><strong>Disponible</strong></span>
-                                                <span class="tituloTabla2 text-success"><strong>D</strong></span>
+                                                <!-- <span class="tituloTabla2 text-success"><strong>D</strong></span> -->
                                         </td>
                                     @else
                                         <td style="position: all;">
                                                 <span class="tituloTabla text-danger"><strong>No Disponible</strong></span>
-                                                <span class="tituloTabla2 text-danger"><strong>N/D</strong></span>
+                                                <!-- <span class="tituloTabla2 text-danger"><strong>N/D</strong></span> -->
                                         </td>
                                     @endif
                                     <td>

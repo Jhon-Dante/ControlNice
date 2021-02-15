@@ -183,6 +183,23 @@ class AdminController extends Controller
                     $user2->rut=$request->rut_e;
                     $user2->email=$request->email_e;
                     $user2->save();
+
+
+                    $residente=Residentes::where('id_usuario',$user2->id)->count();
+
+                    if($residente == 0){
+
+                        $residente2=Residentes::where('id_usuario',$user2->id)->first();
+
+                        $residente2->nombres=$request->name_e;
+                        $residente2->apellidos=$request->name_e;
+                        $residente2->rut=$request->rut_e.'-'.$request->verificador_e;
+                        $residente2->id_usuario=$user2->id;
+                        $residente2->id_admin=$user->id;
+                        $residente2->save();
+                    }
+
+
                     toastr()->success('con éxito!!', 'Admin Actualizado');
                         return redirect()->back();
                 } else {

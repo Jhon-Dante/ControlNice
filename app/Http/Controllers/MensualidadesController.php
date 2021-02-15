@@ -48,12 +48,13 @@ class MensualidadesController extends Controller
 
 		} else {
 			for($i=0;$i<count($request->mes);$i++){
+				$monto=$request->monto[$i]*100;
 				$mensualidad=new Mensualidades();
 				$mensualidad->id_inmueble=$request->id_inmueble;
 				$mensualidad->mes=$request->mes[$i];
 				$mensualidad->anio=$request->anio;
 				// $mensualidad->monto=$request->monto[$i];
-				$mensualidad->monto=$request->monto;
+				$mensualidad->monto=$monto;
 				$mensualidad->save();
 			}
 			toastr()->success('con éxito!!', 'Mensualidades registradas');
@@ -116,19 +117,21 @@ class MensualidadesController extends Controller
 	{
 		$buscar=Mensualidades::where('id_inmueble',$id_inmueble)->where('anio',$request->anio)->get();
 		if (count($buscar)>0) {
-		foreach ($buscar as $key) {
-		$mensualidad=Mensualidades::find($key->id);
-		$mensualidad->delete();
-		}
+			foreach ($buscar as $key) {
+				$mensualidad=Mensualidades::find($key->id);
+				$mensualidad->delete();
+			}
 		}
 		for($i=0;$i<count($request->mes);$i++){
-		$mensualidad=new Mensualidades();
+			$monto=$request->monto[$i]*100;
+			dd($monto);
+			$mensualidad=new Mensualidades();
 
-		$mensualidad->id_inmueble=$request->id_inmueble;
-		$mensualidad->mes=$request->mes[$i];
-		$mensualidad->anio=$request->anio;
-		$mensualidad->monto=$request->monto[$i];
-		$mensualidad->save();
+			$mensualidad->id_inmueble=$request->id_inmueble;
+			$mensualidad->mes=$request->mes[$i];
+			$mensualidad->anio=$request->anio;
+			$mensualidad->monto=$monto;
+			$mensualidad->save();
 		}
 		toastr()->success('con éxito!', 'Mensualidades actualizadas');
 		return redirect()->to('mensualidades');

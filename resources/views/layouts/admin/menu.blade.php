@@ -136,16 +136,16 @@
                                     </a>
                                 </li>
 
-                                <li>
+                                {{--<li>
                                     <a href="{{ url('estacionamientos') }}">
                                         <span> Estacionamientos </span>
                                     </a>
-                                </li>
-                                <li>
+                                </li>--}}
+                                {{--<li>
                                     <a href="{{ url('multas_recargas')}}">
                                         <span> Crear o Editar Multas/Recargas </span>
                                     </a>
-                                </li>
+                                </li>--}}
                                 <!-- <li>
                                     <a class="dropdown-item" onclick="asignar_mr()" data-toggle="modal" data-target="#AsignarMR">
                                         <span> Asignar M/R </span>
@@ -206,9 +206,11 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ url('alquiler') }}">
+                            <!-- <a href="{{ url('alquiler') }}"> -->
+                            <a href="#" style="color: red">
                                 <i data-feather="columns"></i>
                                 <span> Arriendo de Inst. </span>
+                                <br>¡Próximamente!
                             </a>
                         </li>
                     @endif
@@ -259,9 +261,11 @@
 
                         @if(\Auth::user()->tipo_usuario == 'Admin')
                             <li>
-                                <a href="{{ url('contabilidad') }}">
+                                <!-- <a href="{{ url('contabilidad') }}"> -->
+                                <a href="#" style="color: red">
                                     <i data-feather="activity"></i>
                                     <span> Balance General </span>
+                                    <br>¡Próximamente!
                                 </a>
                             </li>
                         @endif

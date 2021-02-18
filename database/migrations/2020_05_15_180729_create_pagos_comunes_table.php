@@ -18,7 +18,7 @@ class CreatePagosComunesTable extends Migration
             $table->enum('tipo',['Inmueble','Estacionamiento']);
             $table->integer('mes');
             $table->integer('anio');
-            $table->double('monto');
+            $table->integer('monto');
             $table->unsignedBigInteger('id_admin');
 
             $table->foreign('id_admin')->references('id')->on('users_admin')->onDelete('cascade');

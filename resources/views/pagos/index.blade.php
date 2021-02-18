@@ -82,16 +82,21 @@
                             <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                 <thead>
                                     <tr class="bg-info text-white">
-                                        <th>Nombres</th>
-                                        <th>RUT</th>
-                                        <th>Asignaciones</th>
-                                        <th>Opciones</th>
+                                        <th>Inmueble</th>
+                                        <th>Nombre residente</th>
+                                        <th>Rut residente</th>
+                                        <th colspan="3"><center>Opciones</center></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($residentes as $key)
                                         <tr>
-                                            <td align="center">
+                                            <td>
+                                                @foreach($key->inmuebles as $key2)
+                                                    <li>{{$key2->idem}}</li>
+                                                @endforeach
+                                            </td>
+                                            <td>
                                                 <div class="form-group">
                                                     {{$key->nombres}} {{$key->apellidos}}
                                                     <br>
@@ -101,35 +106,35 @@
                                                 {{$key->rut}}
                                             </td>
                                             <td align="center">
-                                                @foreach($asignaIn as $key2)
+                                                <a style="margin-right: 3px;"data-toggle="tooltip" data-placement="top" title="Consultar Gastos Comunes de {{$key->nombres}} {{$key->apellidos}}" href="{{ url('pagos/'.$key->id.'/consultas')}}" class="btn btn-danger btn-sm shadow">
+                                                    <i data-feather="clipboard" class="clipboard"></i>
+                                                </a>
+                                            </td>
+                                            <td align="center">
+                                                {{-- @foreach($asignaIn as $key2)
                                                     @if($key2->id_residente == $key->id)
                                                         <a data-toggle="tooltip" data-placement="top" title="Inmuebles asignados al residente" style="
                                                             background-color: #CB8C4D !important;" class="btn btn-sm shadow" onclick="VerResi('{{$key2->id_residente}}')" href="#">
                                                             <i data-feather="home" class="clipboard"></i>
                                                         </a>
                                                     @endif
-                                                @endforeach
-                                                <a data-toggle="tooltip" data-placement="top" title="Consultar los Gastos Comunes realizados del residente" href="{{ url('pagos/'.$key->id.'/consultas')}}" class="btn btn-danger btn-sm shadow">
-                                                    <i data-feather="clipboard" class="clipboard"></i>
-                                                </a>
-                                                <br><br>
-                                                @foreach($asignaEs as $key2)
+                                                @endforeach --}}
+                                                
+                                                {{-- @foreach($asignaEs as $key2)
                                                     @if($key2->id_residente == $key->id)
                                                         <a data-toggle="tooltip" data-placement="top" title="Estacionamientos asignados al residente" style="background-color: #cccc00 !important;" class="btn btn-sm shadow" onclick="VerEstacionamientos('{{$key2->id_residente}}')" href="#">
                                                                 <i data-feather="truck" class="clipboard"></i>
                                                         </a>
                                                     @endif
-                                                @endforeach
+                                                @endforeach --}}
                                                                                          
-                                            </td>
-                                            <td align="center">
                                                 @php $cuenta=0; @endphp
                                                 @foreach($asignaIn as $key2)
                                                     @if($key2->id_residente == $key->id)
                                                         @if($cuenta==0)
 
                                                             <div class="row justify-content-center">
-                                                                <div style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Editar pagos realizados por el residente" class="dropdown align-self-center profile-dropdown-menu">
+                                                                {{--<div style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Editar pagos realizados por el residente" class="dropdown align-self-center profile-dropdown-menu">
                                                                     
                                                                     <a href="#" class="dropdown-toggle mr-0 btn btn-sm btn-warning shadow" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> 
                                                                         <i data-feather="edit"></i>
@@ -147,13 +152,12 @@
                                                                         </a>
 
                                                                     </div>
-                                                                </div>
+                                                                </div>--}}
+
                                                                 <a style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Seleccione para realizar un pago común" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success shadow">
                                                                     <i data-feather="dollar-sign"></i>
                                                                 </a>
-                                                                <a data-toggle="tooltip" data-placement="top" title="Ver pagos por confirmar del residente" href="#" class="btn btn btn-info btn-sm shadow" onclick="pagosPorComprobar('{{$key->id}}')">
-                                                                    <i data-feather="eye"></i>
-                                                                </a>
+                                                                
                                                             </div>   
                                                             @php $cuenta++; @endphp
                                                         @endif
@@ -207,6 +211,11 @@
                                                             @endif
                                                         @endif
                                                 @endforeach
+                                            </td>
+                                            <td align="center">
+                                                <a data-toggle="tooltip" data-placement="top" title="Ver pagos por confirmar del residente" href="#" class="btn btn btn-info btn-sm shadow" onclick="pagosPorComprobar('{{$key->id}}')">
+                                                    <i data-feather="eye"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach()
@@ -270,12 +279,8 @@
                                             <tr>
                                                 <td>
                                                     <ul>
-                                                        @foreach($key->inmuebles as $key3)
-                                                            <li>
-                                                                <span data-toggle="tooltip" data-placement="top" title="{{$key3->idem}}">
-                                                                    {{Str::limit($key3->idem, 15, ' ...')}}
-                                                                </span>
-                                                            </li>
+                                                        @foreach($key->inmuebles as $key2)
+                                                            <li>{{$key2->idem}}</li>
                                                         @endforeach
                                                     </ul>
                                                 </td>

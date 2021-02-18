@@ -63,8 +63,8 @@ class PagosController extends Controller
         $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
         $estacionamientos=Estacionamientos::where('id_admin',$id_admin)->get();
 
-        $asignaIn= \DB::table('residentes_has_inmuebles')->where('status','En Uso')->groupBy('id_residente')->get();
-        $asignaEs= \DB::table('residentes_has_est')->where('status','En Uso')->groupBy('id_residente')->get();
+        $asignaIn= \DB::table('residentes_has_inmuebles')->where('status','En Uso')->get();
+        $asignaEs= \DB::table('residentes_has_est')->where('status','En Uso')->get();
 
         $meses2=Meses::where('id','<=',date("m"))->get();
 

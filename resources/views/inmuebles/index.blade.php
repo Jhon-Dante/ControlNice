@@ -127,7 +127,7 @@
                     <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                     <thead class="text-capitalize bg-primary">
                         <tr class="text-white" style="background-color: #CB8C4D;">
-                            <th>#</th>
+                            <!-- <th>#</th> -->
                             <th>Idem</th>
                             <th>Tipo</th>
                             <th>Status</th>
@@ -138,7 +138,7 @@
                         @php $num=0 @endphp
                             @foreach($inmuebles as $key)
                                 <tr>
-                                    <td align="center">{{$num=$num+1}}</td>
+                                    {{--<td align="center">{{$num=$num+1}}</td>--}}
                                     <td style="position: all;">
                                         <span data-toggle="tooltip" data-placement="top" title="{{$key->idem}}">
                                             {{Str::limit($key->idem, 15, ' ...')}}
@@ -183,7 +183,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>#</th>
+                            <!-- <th>#</th> -->
                             <th>Idem</th>
                             <th>Tipo</th>
                             <th>Status</th>

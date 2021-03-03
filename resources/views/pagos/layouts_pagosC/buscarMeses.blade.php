@@ -16,7 +16,7 @@
                 <div class="form-group">
                 	<label>Meses</label>
                     <select type="text" name="mes" class="form-control" id="selectMesesPagosC" onchange="verMesesPagosC2(this.value)">
-                        @foreach($meses2 as $key)
+                        @foreach($meses as $key)
                         	<option value="{{$key->id}}">{{$key->mes}}</option>
                         @endforeach
                     </select>

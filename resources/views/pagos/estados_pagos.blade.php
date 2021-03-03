@@ -88,7 +88,7 @@
                                 <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                     <thead>
                                         <tr>
-                                            <th>Inmueble</th>
+                                            <th>Item</th>
                                             @if(\Auth::user()->tipo_usuario=="Admin")
                                             <th>Residente</th>
                                             @endif
@@ -125,8 +125,10 @@
                                             <td>
                                                 @if( status_pagos($key->id,$key2->id,$anio) == "Con deuda")
                                                     <span class="text-danger">{{ status_pagos($key->id,$key2->id,$anio) }}</span>
-                                                @else()
+                                                @elseif(status_pagos($key->id,$key2->id,$anio) == "No aplica")
                                                     {{ status_pagos($key->id,$key2->id,$anio) }}
+                                                @else()
+                                                    <span class="text-success">{{ status_pagos($key->id,$key2->id,$anio) }}</span>
                                                 @endif
                                             </td>
                                             <td>

@@ -1165,16 +1165,16 @@
 							}
 						}//cierre de if de status alquilado
 					}//cierre del for
-					$('#muestraMesesAPagar').append(
-						'<br><div class="row border" style="display:none;" id="referencia_p">'+
-		                    '<div class="col-md-12">'+
-		                        '<div class="form-group">'+
-		                            '<label>Referencia</label>'+
-		                            '<input type="number" name="referencia" placeholder="Nro. de referencia" id="referencia_p_arriendos" maxlength="20" class="form-control border border-primary" required="required">'+
-		                        '</div>'+
-		                    '</div>'+
-		                '</div>'
-		            );
+					// $('#muestraMesesAPagar').append(
+					// 	'<br><div class="row border" style="display:none;" id="referencia_p">'+
+		   //                  '<div class="col-md-12">'+
+		   //                      '<div class="form-group">'+
+		   //                          '<label>Referencia</label>'+
+		   //                          '<input type="number" name="referencia" placeholder="Nro. de referencia" id="referencia_p_arriendos" maxlength="20" class="form-control border border-primary">'+
+		   //                      '</div>'+
+		   //                  '</div>'+
+		   //              '</div>'
+		   //          );
 		            $('#muestraMesesAPagar').append('<input type="hidden" name="id_user" value="'+id_residente+'" >');
 		            $('#mostrarFlow').show();
 				}else{

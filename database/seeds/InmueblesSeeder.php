@@ -23,7 +23,7 @@ class InmueblesSeeder extends Seeder
         }
 
 
-    	for ($i=0; $i < 10; $i++) { 
+    	for ($i=1; $i < 10; $i++) { 
 	        \DB::table('inmuebles')->insert([
 	        	'idem' => 'Inmueble'.$i,
 	        	'tipo' => 'Casa',

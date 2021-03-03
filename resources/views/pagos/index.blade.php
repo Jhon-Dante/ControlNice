@@ -82,7 +82,7 @@
                             <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                 <thead>
                                     <tr class="bg-info text-white">
-                                        <th>Inmueble</th>
+                                        <th>Item</th>
                                         <th>Nombre residente</th>
                                         <th>Rut residente</th>
                                         <th colspan="3"><center>Opciones</center></th>

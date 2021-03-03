@@ -66,7 +66,7 @@ class PagosController extends Controller
         $asignaIn= \DB::table('residentes_has_inmuebles')->where('status','En Uso')->get();
         $asignaEs= \DB::table('residentes_has_est')->where('status','En Uso')->get();
 
-        $meses2=Meses::where('id','<=',date("m"))->get();
+        // $meses2=Meses::where('id','<=',date("m"))->get();
 
         $anio2=Mensualidades::where('id','<>',0)->groupBy('anio')->select('anio')->get();
 
@@ -74,7 +74,7 @@ class PagosController extends Controller
         $anio=date('Y');
 
         // dd($residentes);
-        return View('pagos.index', compact('residentes','pagos','inmuebles','estacionamientos','meses','meses2','anio','anio2','asignaEs','asignaIn'));
+        return View('pagos.index', compact('residentes','pagos','inmuebles','estacionamientos','meses','anio','anio2','asignaEs','asignaIn'));
     }
 
     public function pagos_multas(){
@@ -388,7 +388,7 @@ class PagosController extends Controller
                 }
 
                 if($request->tipo_pago=="Flow"){
-                    if ($total >= 350) {
+                    if ($total >= 5) {
                         //dd($pago_i);
                         $flowbuilder=new FlowBuilder();
                         $flowbuilder->setPagosI($pago_i);
@@ -400,7 +400,7 @@ class PagosController extends Controller
                         //Con este return nos vamos al controlador de FLOW
                         return  $flowcontroller->orden2($request,$total,$concepto,$email_pagador,$orden_compra);
                     } else {
-                        toastr()->error('ERROR!!', 'El monto debe ser mayor a 350 pesos chilenos');
+                        toastr()->error('ERROR!!', 'El monto debe ser mayor a 5 pesos chilenos');
                         return redirect()->back();
                     }
                 }else{

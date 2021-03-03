@@ -539,7 +539,7 @@ class AlquilerController extends Controller
             $nombre_instalacion = strtoupper($buscar_alquiler->instalacion);
             $tipo_alquiler = strtoupper($buscar_alquiler->tipo);
             $tipo_alq = $buscar_alquiler->tipo;
-            if ($request->monto_alquiler >= 350) {
+            if ($request->monto_alquiler >= 5) {
                 //dd($request->all());
                 $total = $request->monto_alquiler;
                 $flowbuilder=new FlowBuilder1();
@@ -550,7 +550,7 @@ class AlquilerController extends Controller
                 //Con este return nos vamos al controlador de FLOW
                 return  $flowcontroller->orden_alquiler($request,$total,$concepto,$email_pagador,$orden_compra,$tipo_alq,$modulo_pago);
             } else {
-                toastr()->error('ERROR!!', 'El monto a pagar debe ser mayor a 350 pesos chilenos');
+                toastr()->error('ERROR!!', 'El monto a pagar debe ser mayor a 5 pesos chilenos');
                 return redirect()->back();
             }
         } else {

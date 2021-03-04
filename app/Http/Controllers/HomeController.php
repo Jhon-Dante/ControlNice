@@ -20,6 +20,8 @@ use App\Membresias;
 use App\Pasarelas;
 use App\AdminsPasarelas;
 use App\User;
+use App\Mensualidades;
+
 class HomeController extends Controller
 {
 
@@ -44,6 +46,20 @@ class HomeController extends Controller
     public function index()
     {
         //toastr()->warning('Éxito!', 'Usuario Admin registrado');
+        $limpiar=PagosComunes::all();
+        for ($i=0; $i < count($limpiar); $i++) {
+            if ($limpiar[$i]->anio == 0 || $limpiar[$i]->mes == 0) {
+                $limpiar[$i]->delete();
+            }
+        }
+
+        $limpiar2=Mensualidades::all();
+        for ($i=0; $i < count($limpiar2); $i++) {
+            if ($limpiar2[$i]->anio == 0 || $limpiar2[$i]->mes == 0) {
+                $limpiar2[$i]->delete();
+            }
+        }
+
         $admin=UsersAdmin::all();
         $entrar="";
         $id_admin=id_admin(\Auth::user()->email);

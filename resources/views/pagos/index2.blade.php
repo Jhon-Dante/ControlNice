@@ -41,10 +41,10 @@
             
         
         @if(\Auth::user()->tipo_usuario == 'Admin')
+            <div class="card border border-danger rounded card-tabla shadow p-3 bg-white rounded">
             <div class="float-right">
                 <button class="btn btn-success btn-sm rounded shadow"id="vistaPagos2" onclick="verMesesMultas()" style="float: right !important;"><i data-feather="search" class="clipboard"></i>Pagos por mes</button>
             </div>
-            <div class="card border border-danger rounded card-tabla shadow p-3 mt-5 mb-5 bg-white rounded">
                 <div class="card-body">
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
                         <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">

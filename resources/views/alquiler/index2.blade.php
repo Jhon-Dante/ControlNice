@@ -54,7 +54,7 @@
         </div>
     @endif
 
-    <div class="card border border-info rounded card-tabla shadow p-3 mb-5 bg-white rounded">
+    <div class="card border border-info rounded card-tabla shadow p-3 bg-white rounded">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 
@@ -96,6 +96,7 @@
                     <table class="table table-bordered table-hover table-striped dataTable" style="width: 100% !important;">
                         <thead>
                             <tr>
+                                <th>Ítem</th>
                                 <th>Nombre</th>
                                 <th>Horario Disponible</th>
                                 <th>Max. personas</th>
@@ -104,8 +105,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php $num=0 @endphp
                             @foreach($instalaciones as $key)
                                 <tr>
+                                    <td align="center">{{$num=$num+1}}</td>
                                     <td align="center">{{$key->nombre}}</td>
                                     <td>
                                         @foreach($key->dias as $key2)

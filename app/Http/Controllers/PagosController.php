@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use App\Http\FlowBuilder;
 use App\Http\FlowBuilder1;
 use PDF;
+use App\PagosComunes;
 
 try {
   //Do your stuff here
@@ -37,6 +38,20 @@ class PagosController extends Controller
      */
     public function index()
     {
+        $limpiar=PagosComunes::all();
+        for ($i=0; $i < count($limpiar); $i++) {
+            if ($limpiar[$i]->anio == 0 || $limpiar[$i]->mes == 0) {
+                $limpiar[$i]->delete();
+            }
+        }
+
+        $limpiar2=Mensualidades::all();
+        for ($i=0; $i < count($limpiar2); $i++) {
+            if ($limpiar2[$i]->anio == 0 || $limpiar2[$i]->mes == 0) {
+                $limpiar2[$i]->delete();
+            }
+        }
+
 
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);
@@ -50,14 +65,21 @@ class PagosController extends Controller
             $residentes=Residentes::where('id_admin',$id_admin)->where('id_usuario','<>',$user->id)->orderBy('rut','ASC')->get();
         }else{
             $residentes=Residentes::where('id_usuario',\Auth::user()->id)->get();
+            $id_admin=$residentes[0]->id_admin;
         }
+
+        // dd($id_admin);
 
         $meses=\DB::table('meses')
             ->join('mensualidades','mensualidades.mes','=','meses.id')
+            ->join('inmuebles','inmuebles.id','=','mensualidades.id_inmueble')
             ->where('mensualidades.anio', date('Y'))
+            ->where('inmuebles.id_admin',$id_admin)
             ->select('meses.*','mensualidades.monto')
             ->groupBy('meses.id')
+            ->take(12)
             ->get();
+        // dd(count($meses));
 
         $pagos=Pagos::all();
         $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
@@ -250,6 +272,7 @@ class PagosController extends Controller
                                                 if ($request->tipo_pago=="Flow") {
                                                     $pago_i[$pi]=$pagos->id;
                                                     $pi++;
+                                                    $total+=$key2->monto;
                                                 } else {
                                                     if (\Auth::user()->tipo_usuario=="Residente") {
                                                         $pagos->status="Por Confirmar";
@@ -270,6 +293,7 @@ class PagosController extends Controller
                                                     $concepto.="Inmueble: ".$key->idem." - Mes: ".$this->mostrar_mes($request->mes[$i])." - Monto: ".$key2->monto." | ";
                                                     $descripcion="Inmueble: ".$key->idem." - Mes: ".$this->mostrar_mes($request->mes[$i])." - Monto: ".$key2->monto."";                                                    
                                                 }
+                                                // dd('asdasd');
                                             }
                                         }
                                     }
@@ -388,8 +412,8 @@ class PagosController extends Controller
                 }
 
                 if($request->tipo_pago=="Flow"){
+                    dd($total);
                     if ($total >= 5) {
-                        //dd($pago_i);
                         $flowbuilder=new FlowBuilder();
                         $flowbuilder->setPagosI($pago_i);
                         $flowbuilder->setPagosE($pago_e);

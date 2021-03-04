@@ -779,7 +779,9 @@
 		$('#spinnerI2').css('display','block');
 		var id =1;
 		$.get('pagoscomunes/1/'+anio+'/buscarPagoC', function(data) {
-			
+				
+				$('#spinnerI').css('display','none');
+				$('#spinnerI2').css('display','none');
         		
                 $('#PagoCInmuebles1').empty();
                 $('#PagoCInmuebles2').empty();
@@ -980,8 +982,7 @@
                 }
             })
 		.done(function(data) {
-			$('#spinnerI').css('display','none');
-			$('#spinnerI2').css('display','none');
+			
 		});
 	}
 
@@ -2063,6 +2064,7 @@
             
                 //console.log(data.length)
                 if (data.length > 0) {
+                	var num=0;
                 	mes=parseInt(mes);
                 	anio=parseInt(anio);
                 	var contenido='';
@@ -2071,6 +2073,7 @@
                     	total_pagar(data[i].id,anio,mes,i);
                     	multas(data[i].id,anio,mes,i);
                     	contenido+='<tr>'+
+                    			'<td>'+num+1+'</td>'+
                                 '<td><ul id="mis_inmuebles'+i+'"></ul></td>'+
                                 '<td><ul id="id_mis_inmuebles'+i+'"></ul></td>'+
                                 '<td>'+data[i].nombres+', '+data[i].apellidos+'</td>'+
@@ -2088,6 +2091,7 @@
                         '<table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">'+
                             '<thead>'+
                                 '<tr>'+
+                                	'<th>Ítem</th>'+
                                 	'<th>Inmueble</th>'+
                                     '<th>Id de Inmueble</th>'+
                                     '<th>Residente</th>'+
@@ -2113,6 +2117,7 @@
                         '<table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">'+
                             '<thead>'+
                                  '<tr>'+
+                                 	'<th>Ítem</th>'+
                                 	'<th>Inmueble</th>'+
                                     '<th>Id de Inmueble</th>'+
                                     '<th>Residente</th>'+
@@ -2169,9 +2174,15 @@
         		$('#status_inmuebles').empty();
         		if(data.length>0){
         			for (var i = 0; i < data.length; i++) {
+		        		if (data[i].pago_status == 'Pendiente') {
+		        			pago_status='Con Deuda';
+		        		}else{
+		        			pago_status = data[i].pago_status
+		        		}
+
         				$('#id_mis_inmuebles'+numero).append('<li>'+data[i].id_inmueble+'</li>');
         				$('#mis_inmuebles'+numero).append('<li>'+data[i].idem+'</li>');
-        				$('#status_inmuebles'+numero).append('<li>'+data[i].pago_status+'</li>');
+        				$('#status_inmuebles'+numero).append('<li>'+pago_status+'</li>');
         			}
         		
         		}else{

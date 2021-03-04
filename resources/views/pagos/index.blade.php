@@ -41,7 +41,7 @@
             
         
             @if(\Auth::user()->tipo_usuario == 'Admin')
-                <div class="card border border-info rounded card-tabla shadow p-3 mt-5 mb-5 bg-white rounded" id="pagoResidente">
+                <div class="card border border-info rounded card-tabla shadow p-3 bg-white rounded" id="pagoResidente">
                     <div class="card-body">
                         <div class="float-right">
                             <button class="btn btn-success btn-sm rounded shadow"id="vistaPagos2" onclick="verMesesPagosC()"><i data-feather="search" class="clipboard"></i>Pagos por mes</button>
@@ -82,15 +82,18 @@
                             <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                 <thead>
                                     <tr class="bg-info text-white">
-                                        <th>Item</th>
+                                        <th>Ítem</th>
+                                        <th>Idem</th>
                                         <th>Nombre residente</th>
                                         <th>Rut residente</th>
                                         <th colspan="3"><center>Opciones</center></th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $num=0; @endphp
                                     @foreach($residentes as $key)
                                         <tr>
+                                            <td>{{$num=$num+1}}</td>
                                             <td>
                                                 @foreach($key->inmuebles as $key2)
                                                     <li>{{$key2->idem}}</li>
@@ -263,6 +266,7 @@
                             <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                 <thead>
                                     <tr>
+                                        <th>Ítem</th>
                                         <th>Inmueble</th>
                                         <th>Mes</th>
                                         <th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">Monto</th>
@@ -274,9 +278,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $num=0; @endphp
                                     @foreach($residentes as $key) 
                                         @foreach($meses as $key2)
                                             <tr>
+                                                <td>{{$num=$num+1}}</td>
                                                 <td>
                                                     <ul>
                                                         @foreach($key->inmuebles as $key2)

@@ -636,7 +636,7 @@ function status_pagos($id_residente,$mes,$anio){
 			}
 		}
 	}
-	if($status == null || $status == 'Pendiente'){
+	if($status == null || $status == 0 || $status == 'Pendiente'){
 		$status= 'Con deuda';
 	}
 	return $status;

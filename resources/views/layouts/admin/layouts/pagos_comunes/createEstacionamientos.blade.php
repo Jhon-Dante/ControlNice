@@ -31,6 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
+                                <span>El sistema no editará meses anteriores al actual</span>
                                 <div id="PagoCEstaciona1"></div>
                             </div>
                         </div>

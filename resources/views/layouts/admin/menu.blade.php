@@ -81,7 +81,7 @@
                         <li>
                             <a href="javascript: void(0);" aria-expanded="false">
                                 <i data-feather="clock"></i>
-                                <span> Arriendo de Instalación Interna </span>
+                                <span> Alquiler de Instalación Interna </span>
                                 <span class="menu-arrow"></span>
                             </a>
 
@@ -125,7 +125,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('arriendos') }}">
+                                    <a href="{{ url('asignacion') }}">
                                         <span> Asignación de Res/Inm </span>
                                     </a>
                                 </li>
@@ -209,7 +209,7 @@
                             <!-- <a href="{{ url('alquiler') }}"> -->
                             <a href="#" style="color: red">
                                 <i data-feather="columns"></i>
-                                <span> Arriendo de Inst. </span>
+                                <span> Alquiler de Inst. </span>
                                 <br>¡Próximamente!
                             </a>
                         </li>

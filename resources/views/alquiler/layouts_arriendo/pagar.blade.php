@@ -28,7 +28,7 @@
 						    			<label for="tipo_pago_alquiler">Tipo de pago <b style="color: red;">*</b></label>
 						    			<select name="tipo_pago" id="tipo_pago_alquiler" class="form-control" onchange="carg(this);">
 						    				<option value="">Seleccione tipo de pago...</option>
-						    				<option value="Transferencia">Transferencia</option>
+						    				<!-- <option value="Transferencia">Transferencia</option> -->
 						    				@if(\Auth::user()->tipo_usuario=="Admin")
 						    				<option value="Efectivo">Efectivo</option>
 						    				@endif

@@ -25,7 +25,7 @@
                 </div>
             </div>
         @endif
-        <div class="card border border-danger rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none;">
+        <div class="card border border-danger rounded card-tabla shadow p-3 bg-white rounded" style="display: none;">
         	<h3 align="center">Reporte General</h3>
         	<div class="card-body">
 

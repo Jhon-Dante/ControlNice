@@ -33,7 +33,7 @@
             </div>
         @endif
     </div>
-    <div class="card rounded card-tabla shadow p-3 mb-5 bg-white rounded">
+    <div class="card rounded card-tabla shadow p-3 bg-white rounded">
         <div class="row justify-content-center">
             @if(\Auth::user()->tipo_usuario == 'Admin')
                 <div class="col-md-12">
@@ -62,7 +62,7 @@
             <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                 <thead>
                     <tr class="bg-primary text-white">
-                        <th>#</th>
+                        <th>Ítem</th>
                         <th>Idem</th>
                         <th>Status</th>
                         <th>Opciones</th>

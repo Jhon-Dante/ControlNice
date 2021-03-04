@@ -14,7 +14,21 @@ class PagosComunesController extends Controller
 {
     public function store(Request $request)
     {
-    	//dd($request->all());
+    	// dd($request->all());
+        $limpiar=PagosComunes::all();
+        for ($i=0; $i < count($limpiar); $i++) {
+            if ($limpiar[$i]->anio == 0 || $limpiar[$i]->mes == 0) {
+                $limpiar[$i]->delete();
+            }
+        }
+
+        $limpiar2=Mensualidades::all();
+        for ($i=0; $i < count($limpiar2); $i++) {
+            if ($limpiar2[$i]->anio == 0 || $limpiar2[$i]->mes == 0) {
+                $limpiar2[$i]->delete();
+            }
+        }
+
         $id_admin=id_admin(\Auth::user()->email);
         //dd($id_admin);
         /*"anioI" => "2021"
@@ -51,56 +65,66 @@ class PagosComunesController extends Controller
 
                         $meses=Meses::all();
                         foreach($meses as $key){
-                            $pagocomun= PagosComunes::where('tipo',$request->tipo)->where('anio',$request->anioI)->where('mes',$key->id)->where('id_admin',$id_admin)->first();
-                            //dd($pagocomun);
-                            if ($pagocomun!=null) {
-                                
-                                $pagocomun->delete();
-                            }
+                            if(Date('Y') >= $request->anio && Date('m') >= $key->id){
+                            }else{
+                                $pagocomun= PagosComunes::where('tipo',$request->tipo)->where('anio',$request->anioI)->where('mes',$key->id)->where('id_admin',$id_admin)->first();
+                                //dd($pagocomun);
+                                if ($pagocomun!=null) {
+                                    
+                                    $pagocomun->delete();
+                                }
+                            }                              
                         }
 
                         if ($request->accion==1) {
                             $i=0;
                             foreach($meses as $key){
-                                $pagocomun=new PagosComunes();
-                                $pagocomun->tipo=$request->tipo;
-                                $pagocomun->anio=$request->anioI;
-                                $pagocomun->mes=$key->id;
-                                $pagocomun->monto=$request->monto[$i];
-                                $pagocomun->id_admin=$id_admin;
-                                $pagocomun->save();
+                                if(Date('Y') >= $request->anio && Date('m') >= $key->id){
+                                }else{
 
-                                //cambiando montos de inmuebles
-                                $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
-                                foreach ($inmuebles as $key2) {
-                                    foreach ($key2->mensualidades as $key3) {
-                                        if($key3->mes==$key->id){
-                                            $key3->monto=$pagocomun->monto;
-                                            $key3->save();
+                                    $pagocomun=new PagosComunes();
+                                    $pagocomun->tipo=$request->tipo;
+                                    $pagocomun->anio=$request->anioI;
+                                    $pagocomun->mes=$key->id;
+                                    $pagocomun->monto=$request->monto[$i];
+                                    $pagocomun->id_admin=$id_admin;
+                                    $pagocomun->save();
+
+                                    //cambiando montos de inmuebles
+                                    $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
+                                    foreach ($inmuebles as $key2) {
+                                        foreach ($key2->mensualidades as $key3) {
+                                            if($key3->mes==$key->id){
+                                                $key3->monto=$pagocomun->monto;
+                                                $key3->save();
+                                            }
                                         }
                                     }
+                                    $i++;
                                 }
-                                $i++;
                             }
                         } else {
                             // dd($request->all());
                            
                             foreach($meses as $key){
-                                $pagocomun=new PagosComunes();
-                                $pagocomun->tipo=$request->tipo;
-                                $pagocomun->anio=$request->anioI;
-                                $pagocomun->mes=$key->id;
-                                $pagocomun->monto=$request->montoaAnio;
-                                $pagocomun->id_admin=$id_admin;
-                                $pagocomun->save();
+                                if(Date('Y') >= $request->anio && Date('m') >= $key->id){
+                                }else{
+                                    $pagocomun=new PagosComunes();
+                                    $pagocomun->tipo=$request->tipo;
+                                    $pagocomun->anio=$request->anioI;
+                                    $pagocomun->mes=$key->id;
+                                    $pagocomun->monto=$request->montoaAnio;
+                                    $pagocomun->id_admin=$id_admin;
+                                    $pagocomun->save();
 
-                                //cambiando montos de inmuebles
-                                $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
-                                foreach ($inmuebles as $key2) {
-                                    foreach ($key2->mensualidades as $key3) {
-                                        if($key3->mes==$key->id){
-                                            $key3->monto=$pagocomun->monto;
-                                            $key3->save();
+                                    //cambiando montos de inmuebles
+                                    $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
+                                    foreach ($inmuebles as $key2) {
+                                        foreach ($key2->mensualidades as $key3) {
+                                            if($key3->mes==$key->id){
+                                                $key3->monto=$pagocomun->monto;
+                                                $key3->save();
+                                            }
                                         }
                                     }
                                 }
@@ -218,11 +242,14 @@ class PagosComunesController extends Controller
             } else {
                 $meses=Meses::all();
                 foreach($meses as $key){
-                    $pagocomun= PagosComunes::where('tipo',$request->tipo)->where('anio',$anio)->where('mes',$key->id)->where('id_admin',$id_admin)->first();
-                    //dd($pagocomun);
-                    if ($pagocomun!=null) {
-                        
-                        $pagocomun->delete();
+                    if(Date('Y') <= $request->anio && Date('m') <= $key->id){
+                    }else{
+                        $pagocomun= PagosComunes::where('tipo',$request->tipo)->where('anio',$anio)->where('mes',$key->id)->where('id_admin',$id_admin)->first();
+                        //dd($pagocomun);
+                        if ($pagocomun!=null) {
+                            
+                            $pagocomun->delete();
+                        }
                     }
                 }
 
@@ -237,44 +264,50 @@ class PagosComunesController extends Controller
                     if ($request->accion==1) {
                         $i=0;
                         foreach($meses as $key){
-                            $pagocomun=new PagosComunes();
-                            $pagocomun->tipo=$request->tipo;
-                            $pagocomun->anio=$anio;
-                            $pagocomun->mes=$key->id;
-                            $pagocomun->monto=$request->monto[$i];
-                            $pagocomun->id_admin=$id_admin;
-                            $pagocomun->save();
+                            if(Date('Y') >= $request->anio && Date('m') >= $key->id){
+                            }else{
+                                $pagocomun=new PagosComunes();
+                                $pagocomun->tipo=$request->tipo;
+                                $pagocomun->anio=$anio;
+                                $pagocomun->mes=$key->id;
+                                $pagocomun->monto=$request->monto[$i];
+                                $pagocomun->id_admin=$id_admin;
+                                $pagocomun->save();
 
-                            //cambiando montos de inmuebles
-                            $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
-                            foreach ($inmuebles as $key2) {
-                                foreach ($key2->mensualidades as $key3) {
-                                    if($key3->mes==$key->id){
-                                        $key3->monto=$pagocomun->monto;
-                                        $key3->save();
+                                //cambiando montos de inmuebles
+                                $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
+                                foreach ($inmuebles as $key2) {
+                                    foreach ($key2->mensualidades as $key3) {
+                                        if($key3->mes==$key->id){
+                                            $key3->monto=$pagocomun->monto;
+                                            $key3->save();
+                                        }
                                     }
                                 }
+                                $i++;
                             }
-                            $i++;
                         }
                     } else {
                        
                         foreach($meses as $key){
-                            $pagocomun=new PagosComunes();
-                            $pagocomun->tipo=$request->tipo;
-                            $pagocomun->anio=$anio;
-                            $pagocomun->mes=$key->id;
-                            $pagocomun->monto=$request->montoaAnio;
-                            $pagocomun->id_admin=$id_admin;
-                            $pagocomun->save();
+                            if(Date('Y') >= $request->anio && Date('m') >= $key->id){
+                            }else{
+                                $pagocomun=new PagosComunes();
+                                $pagocomun->tipo=$request->tipo;
+                                $pagocomun->anio=$anio;
+                                $pagocomun->mes=$key->id;
+                                $pagocomun->monto=$request->montoaAnio;
+                                $pagocomun->id_admin=$id_admin;
+                                $pagocomun->save();
 
-                            //cambiando montos de inmuebles
-                            $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
-                            foreach ($inmuebles as $key2) {
-                                foreach ($key2->mensualidades as $key3) {
-                                    if($key3->mes==$key->id){
-                                        $key3->monto=$pagocomun->monto;
-                                        $key3->save();
+                                //cambiando montos de inmuebles
+                                $inmuebles=Inmuebles::where('id_admin',$id_admin)->get();
+                                foreach ($inmuebles as $key2) {
+                                    foreach ($key2->mensualidades as $key3) {
+                                        if($key3->mes==$key->id){
+                                            $key3->monto=$pagocomun->monto;
+                                            $key3->save();
+                                        }
                                     }
                                 }
                             }
@@ -366,7 +399,7 @@ class PagosComunesController extends Controller
     {
         $id_admin=id_admin(\Auth::user()->email);
         if ($tipo==1) {
-            return $pagoComun=PagosComunes::where('tipo','Inmueble')->where('anio',$anio)->where('id_admin',$id_admin)->get();
+            return $pagoComun=PagosComunes::where('tipo','Inmueble')->where('anio',$anio)->where('id_admin',$id_admin)->orderBy('mes','ASC')->get();
         }else{
             return $pagoComun=PagosComunes::where('tipo','Estacionamiento')->where('anio',$anio)->where('id_admin',$id_admin)->get();
         }

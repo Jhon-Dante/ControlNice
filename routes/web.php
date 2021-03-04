@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web','auth']], function () {
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('residentes','ResidentesController');
 
-	Route::get('arriendos','ResidentesController@arriendos')->name('arriendos');
+	Route::get('asignacion','ResidentesController@arriendos')->name('asignacion');
 	Route::get('arriendos/{id_residente}/buscar_residente','ResidentesController@buscar_residente');
 	Route::get('residentes/{num}/buscar_residente2','ResidentesController@buscar_residente2');
 	Route::get('arriendos/{id_residente}/buscar_inmuebles','ResidentesController@buscar_inmuebles');

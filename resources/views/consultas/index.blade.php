@@ -133,9 +133,18 @@
         <div class="card border border-primary rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none;">
             <div class="card-body">
                 @if(\Auth::user()->tipo_usuario == 'Admin')
-                    <a href="{{ url('pagos') }}" class="btn btn-info text-white shadow">
+                    <span>Año {{ $anio[0] }} / Inmueble(s)
+                        (@for($i=0;$i < count($inmuebles); $i++)
+                            <strong>{{$inmuebles[$i]->idem}}</strong>
+                            @if($i==0 && $i!= count($inmuebles))
+                                <span>,</span>
+                            @endif 
+                        @endfor)
+                    vinculado a {{$buscar->nombres}} {{$buscar->apellidos}}.
+                    </span><br>
+                    <a href="{{ url('pagos') }}" class="btn btn-info text-white shadow mt-4">
                         <i data-feather="arrow-left-circle"></i>
-                        Regresar a Pagos de Condominio
+                        Regresar a Pagos de Gasto Común
                     </a>
                 @endif
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
@@ -143,7 +152,7 @@
                         <thead>
                             <tr class="bg-primary text-white">
                                 <th>Mes</th>
-                                <th>Status</th>
+                                <th>Estado de pagos</th>
                             </tr>
                         </thead>
                         <tbody id="muestraConsultas">

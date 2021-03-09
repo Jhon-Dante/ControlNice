@@ -1146,6 +1146,12 @@ class PagosController extends Controller
         for ($i=0; $i < count(anios_registros()); $i++) { 
             $anio[$i]=$a[$i]['anio'];
         }
+
+        $inmuebles=\DB::table('residentes_has_inmuebles')
+        ->join('inmuebles','inmuebles.id','=','residentes_has_inmuebles.id_inmueble')
+        ->where('id_residente',$buscar->id)
+        ->select('inmuebles.*')
+        ->get();
         //dd($status_pago);
         return view('consultas.index',compact('status_pago','buscar','anio','inmuebles'));
     }

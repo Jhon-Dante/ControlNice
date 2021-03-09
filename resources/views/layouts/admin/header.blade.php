@@ -11,6 +11,43 @@
                 <img src="{{ asset('assets/images/logo.jpg') }}" alt="" height="70">
             </span>
         </a>
+        @if (Request::url() == url('pagos'))
+            <div class="container" id="container">
+                <input type="hidden" id="colorView" value="#25c2e3 !important">
+                <div class="row page-title">
+                    <div class="col-md-12">
+                        <nav aria-label="breadcrumb" class="float-right mt-1">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Gastos</li>
+                                <li class="breadcrumb-item active" aria-current="page">Gastos Comunes</li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Gastos - Gastos Comunes</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif(Request::url() == url('estados_pagos'))
+            <div class="container" id="container">
+                <input type="hidden" id="colorView" value="#25c2e3 !important">
+                <div class="row page-title">
+                    <div class="col-md-12">
+                        <nav aria-label="breadcrumb" class="float-right mt-1">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Pagos</li>
+                                <li class="breadcrumb-item active" aria-current="page">Estados de Pagos</li>
+                            </ol>
+                        </nav>
+                        <div class="row">
+                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Pagos - Estados de Pagos</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <ul class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
             <li class="">

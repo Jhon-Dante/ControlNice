@@ -3,23 +3,7 @@
 
 @section('content')
 <br>
-    <div class="container" id="container">
-        <input type="hidden" id="colorView" value="#25c2e3 !important">
-        <div class="row page-title">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="float-right mt-1">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pagos</li>
-                        <li class="breadcrumb-item active" aria-current="page">Estados de Pagos</li>
-                    </ol>
-                </nav>
-                <div class="row">
-                    <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Pagos - Estados de Pagos</h4>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     @include('flash::message')
     @if(count($errors))
@@ -41,7 +25,7 @@
             
         
 
-               
+    <br><br>
                 <div class="card" id="pagoResidente">
                     <div class="card-body">
                         {!! Form::open(['route' => ['estados_pagos_pdf'], 'target' => '_blank','method' => 'GET', 'name' => 'estados_pagos_pdf', 'id' => 'estados_pagos_pdf', 'data-parsley-validate']) !!}
@@ -68,15 +52,19 @@
                                         <select class="form-control select2" multiple name="mes" id="mes_select" onchange="filtro_pagos()">
                                             <option selected disabled>Seleccionar Mes</option>
                                             @foreach($meses as $key)
-                                                <option value="{{$key->id}}">{{$key->mes}} - {{$key->monto}}$</option>
+                                                <option value="{{$key->id}}">{{$key->mes}}</option>
                                             @endforeach()
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label>Generar PDF</label>
                                     <br>
                                     <button type="submit" target="_blank" class="btn btn-danger btn-sm rounded shadow" ><i data-feather="file-text" class="clipboard"></i> PDF</button>
+                                </div>
+                                <div class="col-md-2" id="vistaPrincipal" style="display: none;">
+                                    <label>Volver</label><br>
+                                    <a href="{!!Request::path()!!}" class="btn btn-success">Vista Principal </a>
                                 </div>
                             </div>
                         {!! Form::close() !!}

@@ -2,25 +2,6 @@
 
 
 @section('content')
-<br>
-    <div class="container" id="container">
-        <input type="hidden" id="colorView" value="#25c2e3 !important">
-        <div class="row page-title">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb" class="float-right mt-1">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Gastos</li>
-                        <li class="breadcrumb-item active" aria-current="page">Gastos Comunes</li>
-                    </ol>
-                </nav>
-                <div class="row">
-                    <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Gastos - Gastos Comunes</h4>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @include('flash::message')
     @if(count($errors))
         <div class="alert-list m-4">
@@ -39,326 +20,339 @@
         </div>
     @endif
             
-        
-            @if(\Auth::user()->tipo_usuario == 'Admin')
-                <div class="card border border-info rounded card-tabla shadow p-3 bg-white rounded" id="pagoResidente">
-                    <div class="card-body">
-                        <div class="float-right">
-                            <button class="btn btn-success btn-sm rounded shadow"id="vistaPagos2" onclick="verMesesPagosC()"><i data-feather="search" class="clipboard"></i>Pagos por mes</button>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Seleccionar Año</label>
-                                    <select class="form-control" name="anio" id="anio_select" onchange="filtro_pagos()">
-                                        <option selected disabled>Seleccionar Año</option>
-                                        @foreach($anio2 as $key)
-                                            @if(date('Y')==$key->anio)
-                                                <option value="{{$key->anio}}" selected>{{$key->anio}}</option>
-                                            @else
-                                                <option value="{{$key->anio}}">{{$key->anio}}</option>
-                                            @endif
-                                        @endforeach()
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Seleccionar Mes</label>
-                                    <select class="form-control select2" multiple name="mes" id="mes_select" onchange="filtro_pagos()">
-                                        <option selected disabled>Seleccionar Mes</option>
-                                        @foreach($meses as $key)
-                                            <option value="{{$key->id}}">{{$key->mes}} - {{$key->monto}}$</option>
-                                        @endforeach()
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="CargandoFiltroPagos" style="display: none;">
-                                <div class="spinner-border text-success m-4" role="status"></div>
+    <div class="mb-4">
+        <br><br>
+        @if(\Auth::user()->tipo_usuario == 'Admin')
+            <div class="card border border-info rounded card-tabla shadow p-3 bg-white rounded" id="pagoResidente">
+                <div class="card-body">
+                    {{--<div class="float-right">
+                        <button class="btn btn-success btn-sm rounded shadow"id="vistaPagos2" onclick="verMesesPagosC()"><i data-feather="search" class="clipboard"></i>Pagos por mes</button>
+                    </div>--}}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Seleccionar Año</label>
+                                <select class="form-control" name="anio" id="anio_select" onchange="filtro_pagos()">
+                                    <option selected disabled>Seleccionar Año</option>
+                                    @foreach($anio2 as $key)
+                                        @if(date('Y')==$key->anio)
+                                            <option value="{{$key->anio}}" selected>{{$key->anio}}</option>
+                                        @else
+                                            <option value="{{$key->anio}}">{{$key->anio}}</option>
+                                        @endif
+                                    @endforeach()
+                                </select>
                             </div>
                         </div>
-                        <hr>
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
-                            <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
-                                <thead>
-                                    <tr class="bg-info text-white">
-                                        <th>Ítem</th>
-                                        <th>Idem</th>
-                                        <th>Nombre residente</th>
-                                        <th>Rut residente</th>
-                                        <th colspan="3"><center>Opciones</center></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $num=0; @endphp
-                                    @foreach($residentes as $key)
-                                        <tr>
-                                            <td>{{$num=$num+1}}</td>
-                                            <td>
-                                                @foreach($key->inmuebles as $key2)
-                                                    <li>{{$key2->idem}}</li>
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    {{$key->nombres}} {{$key->apellidos}}
-                                                    <br>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Seleccionar Mes</label>
+                                <select class="form-control select2" multiple name="mes" id="mes_select" onchange="filtro_pagos()">
+                                    <option selected disabled>Seleccionar Mes</option>
+                                    @foreach($meses as $key)
+                                        <option value="{{$key->id}}">{{$key->mes}}</option>
+                                    @endforeach()
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="vistaPrincipal" style="display: none">
+                            <label>Volver</label><br>
+                            <a href="{!!Request::path()!!}" class="btn btn-success">Vista Principal </a>
+                        </div>
+                        <div id="CargandoFiltroPagos" style="display: none;">
+                            <div class="spinner-border text-success m-4" role="status"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
+                        <table id="example1" class="table dataTable table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
+                            <thead>
+                                <tr class="bg-info text-white">
+                                    <th>Ítem</th>
+                                    <th>Inmueble</th>
+                                    <th>Nombre residente</th>
+                                    <th>Rut residente</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $num=0; @endphp
+                                @foreach($residentes as $key)
+                                    <tr>
+                                        <td>{{$num=$num+1}}</td>
+                                        <td>
+                                            @foreach($key->inmuebles as $key2)
+                                                <li>{{$key2->idem}}</li>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                {{$key->nombres}} {{$key->apellidos}}
+                                                <br>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{$key->rut}}
+                                        </td>
+                                        <td align="center">
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-2">
+                                                    <a style="margin-right: 3px;"data-toggle="tooltip" data-placement="top" title="Consultar Gastos Comunes de {{$key->nombres}} {{$key->apellidos}}" href="{{ url('pagos/'.$key->id.'/consultas')}}" class="btn btn-danger btn-sm shadow">
+                                                        <i data-feather="clipboard" class="clipboard"></i>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                {{$key->rut}}
-                                            </td>
-                                            <td align="center">
-                                                <a style="margin-right: 3px;"data-toggle="tooltip" data-placement="top" title="Consultar Gastos Comunes de {{$key->nombres}} {{$key->apellidos}}" href="{{ url('pagos/'.$key->id.'/consultas')}}" class="btn btn-danger btn-sm shadow">
-                                                    <i data-feather="clipboard" class="clipboard"></i>
-                                                </a>
-                                            </td>
-                                            <td align="center">
-                                                {{-- @foreach($asignaIn as $key2)
-                                                    @if($key2->id_residente == $key->id)
-                                                        <a data-toggle="tooltip" data-placement="top" title="Inmuebles asignados al residente" style="
-                                                            background-color: #CB8C4D !important;" class="btn btn-sm shadow" onclick="VerResi('{{$key2->id_residente}}')" href="#">
-                                                            <i data-feather="home" class="clipboard"></i>
-                                                        </a>
-                                                    @endif
-                                                @endforeach --}}
-                                                
-                                                {{-- @foreach($asignaEs as $key2)
-                                                    @if($key2->id_residente == $key->id)
-                                                        <a data-toggle="tooltip" data-placement="top" title="Estacionamientos asignados al residente" style="background-color: #cccc00 !important;" class="btn btn-sm shadow" onclick="VerEstacionamientos('{{$key2->id_residente}}')" href="#">
-                                                                <i data-feather="truck" class="clipboard"></i>
-                                                        </a>
-                                                    @endif
-                                                @endforeach --}}
-                                                                                         
-                                                @php $cuenta=0; @endphp
-                                                @foreach($asignaIn as $key2)
-                                                    @if($key2->id_residente == $key->id)
-                                                        @if($cuenta==0)
-
-                                                            <div class="row justify-content-center">
-                                                                {{--<div style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Editar pagos realizados por el residente" class="dropdown align-self-center profile-dropdown-menu">
-                                                                    
-                                                                    <a href="#" class="dropdown-toggle mr-0 btn btn-sm btn-warning shadow" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> 
-                                                                        <i data-feather="edit"></i>
-                                                                    </a>
-
-                                                                    <div class="dropdown-menu profile-dropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
-
-
-                                                                        <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',1)" >
-                                                                            <span class="text-primary">Pago Común</span>
-                                                                        </a>
-
-                                                                        <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',3)" >
-                                                                            <span class="text-danger">Multas</span>
-                                                                        </a>
-
-                                                                    </div>
-                                                                </div>--}}
-
-                                                                <a style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Seleccione para realizar un pago común" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success shadow">
-                                                                    <i data-feather="dollar-sign"></i>
-                                                                </a>
-                                                                
-                                                            </div>   
-                                                            @php $cuenta++; @endphp
-                                                        @endif
-                                                    @endif
-                                                @endforeach
-                                                @foreach($asignaEs as $key2)
+                                                <div class="col-md-2">
+                                                    {{-- @foreach($asignaIn as $key2)
                                                         @if($key2->id_residente == $key->id)
-                                                            @if($cuenta==0) 
-                                                                <div class="dropdown align-self-center profile-dropdown-menu">
-                                                                    
-                                                                    <a style="border-radius: 5px; width: 100%;" href="#" class="dropdown-toggle mr-0 btn btn-sm btn-warning"data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> 
-                                                                    <span style="position: relative;">
-                                                                        <i data-feather="edit" style="float:left;"></i>Editar Pago
-                                                                    </span>
-                                                                    </a>
+                                                            <a data-toggle="tooltip" data-placement="top" title="Inmuebles asignados al residente" style="
+                                                                background-color: #CB8C4D !important;" class="btn btn-sm shadow" onclick="VerResi('{{$key2->id_residente}}')" href="#">
+                                                                <i data-feather="home" class="clipboard"></i>
+                                                            </a>
+                                                        @endif
+                                                    @endforeach --}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    {{-- @foreach($asignaEs as $key2)
+                                                        @if($key2->id_residente == $key->id)
+                                                            <a data-toggle="tooltip" data-placement="top" title="Estacionamientos asignados al residente" style="background-color: #cccc00 !important;" class="btn btn-sm shadow" onclick="VerEstacionamientos('{{$key2->id_residente}}')" href="#">
+                                                                    <i data-feather="truck" class="clipboard"></i>
+                                                            </a>
+                                                        @endif
+                                                    @endforeach --}}
+                                                </div>
+                                                <div class="col-md-2">                                    
+                                                    @php $cuenta=0; @endphp
+                                                    @foreach($asignaIn as $key2)
+                                                        @if($key2->id_residente == $key->id)
+                                                            @if($cuenta==0)
 
-                                                                    <div class="dropdown-menu profile-dropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
-
-
-                                                                        <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',1)" >
-                                                                            <span class="text-primary">Pago común</span>
-                                                                        </a>
-
-                                                                        <!-- <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',2)" >
-                                                                            <span class="text-warning">Estacionamientos</span>
-                                                                        </a> -->
-
-                                                                        <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',3)" >
-                                                                            <span class="text-danger">Multas</span>
-                                                                        </a>
-
+                                                                <div class="row justify-content-center">
+                                                                    {{--<div style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Editar pagos realizados por el residente" class="dropdown align-self-center profile-dropdown-menu">
                                                                         
-                                                                        <!-- <div class="dropdown-divider"></div> -->
+                                                                        <a href="#" class="dropdown-toggle mr-0 btn btn-sm btn-warning shadow" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false"> 
+                                                                            <i data-feather="edit"></i>
+                                                                        </a>
 
-                                                                    </div>
-                                                                </div>
-                                                                <br>
+                                                                        <div class="dropdown-menu profile-dropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
 
 
-                                                                <a style="border-radius: 5px; width: 100%;" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success"> 
-                                                                    <i data-feather="dollar-sign" style="float:left;"></i>
-                                                                    <span>Realizar Pago</span>
-                                                                </a>
+                                                                            <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',1)" >
+                                                                                <span class="text-primary">Pago Común</span>
+                                                                            </a>
 
-                                                                <br><br>
-                                                                <center><a href="#" class="btn btn btn-info btn-sm" style="border-radius: 5px; width: 100%" onclick="pagosPorComprobar('{{$key->id}}')">
-                                                                    <i data-feather="eye" style="float:left;"></i>
-                                                                    <span>Pagos por Confirmar</span>
-                                                                </a></center>
+                                                                            <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',3)" >
+                                                                                <span class="text-danger">Multas</span>
+                                                                            </a>
+
+                                                                        </div>
+                                                                    </div>--}}
+
+                                                                    <a style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Seleccione para realizar un pago común" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success shadow">
+                                                                        <i data-feather="dollar-sign"></i>
+                                                                    </a>
+                                                                    
+                                                                </div>   
                                                                 @php $cuenta++; @endphp
                                                             @endif
                                                         @endif
-                                                @endforeach
+                                                    @endforeach
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @foreach($asignaEs as $key2)
+                                                            @if($key2->id_residente == $key->id)
+                                                                @if($cuenta==0) 
+                                                                    <div class="dropdown align-self-center profile-dropdown-menu">
+                                                                        
+                                                                        <a style="border-radius: 5px; width: 100%;" href="#" class="dropdown-toggle mr-0 btn btn-sm btn-warning"data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> 
+                                                                        <span style="position: relative;">
+                                                                            <i data-feather="edit" style="float:left;"></i>Editar Pago
+                                                                        </span>
+                                                                        </a>
+
+                                                                        <div class="dropdown-menu profile-dropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+
+
+                                                                            <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',1)" >
+                                                                                <span class="text-primary">Pago común</span>
+                                                                            </a>
+
+                                                                            <!-- <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',2)" >
+                                                                                <span class="text-warning">Estacionamientos</span>
+                                                                            </a> -->
+
+                                                                            <a href="#" class="dropdown-item notify-item" onclick="EditarPago('{{$key->id}}',3)" >
+                                                                                <span class="text-danger">Multas</span>
+                                                                            </a>
+
+                                                                            
+                                                                            <!-- <div class="dropdown-divider"></div> -->
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+
+
+                                                                    <a style="border-radius: 5px; width: 100%;" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success"> 
+                                                                        <i data-feather="dollar-sign" style="float:left;"></i>
+                                                                        <span>Realizar Pago</span>
+                                                                    </a>
+
+                                                                    <br><br>
+                                                                    <center><a href="#" class="btn btn btn-info btn-sm" style="border-radius: 5px; width: 100%" onclick="pagosPorComprobar('{{$key->id}}')">
+                                                                        <i data-feather="eye" style="float:left;"></i>
+                                                                        <span>Pagos por Confirmar</span>
+                                                                    </a></center>
+                                                                    @php $cuenta++; @endphp
+                                                                @endif
+                                                            @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {{--<td align="center">
+                                            <a data-toggle="tooltip" data-placement="top" title="Ver pagos por confirmar del residente" href="#" class="btn btn btn-info btn-sm shadow" onclick="pagosPorComprobar('{{$key->id}}')">
+                                                <i data-feather="eye"></i>
+                                            </a>
+                                        </td>--}}
+                                    </tr>
+                                @endforeach()
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="card" id="pagoResidente">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Seleccionar Año</label>
+                                <select class="form-control" name="anio" id="anio_select" onchange="filtro_pagos()">
+                                    @foreach($anio2 as $key)
+                                        @if(date('Y')==$key->anio)
+                                            <option value="{{$key->anio}}" selected>{{$key->anio}}</option>
+                                        @else
+                                            <option value="{{$key->anio}}">{{$key->anio}}</option>
+                                        @endif
+                                    @endforeach()
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Seleccionar Mes</label>
+                                <select class="form-control" name="mes" id="mes_select" onchange="filtro_pagos()">
+                                    @foreach($meses as $key)
+                                        <option value="{{$key->id}}">{{$key->mes}}</option>
+                                    @endforeach()
+                                </select>
+                            </div>
+                        </div>
+                        <div id="CargandoFiltroPagos" style="display: none;">
+                            <div class="spinner-border text-success m-4" role="status"></div>
+                        </div>
+                    </div>
+                
+                    <hr>
+                    <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
+                        <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
+                            <thead>
+                                <tr>
+                                    <th>Ítem</th>
+                                    <th>Inmueble</th>
+                                    <th>Mes</th>
+                                    <th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">Monto</th>
+                                    <th>Estado de Pago</th>
+                                    <th>Descripción M/R</th>
+                                    <th>Monto M/R</th>
+                                    <th>Estado de Pago M/R</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $num=0; @endphp
+                                @foreach($residentes as $key) 
+                                    @foreach($meses as $key2)
+                                        <tr>
+                                            <td>{{$num=$num+1}}</td>
+                                            <td>
+                                                <ul>
+                                                    @foreach($key->inmuebles as $key2)
+                                                        <li>{{$key2->idem}}</li>
+                                                    @endforeach
+                                                </ul>
                                             </td>
-                                            <td align="center">
-                                                <a data-toggle="tooltip" data-placement="top" title="Ver pagos por confirmar del residente" href="#" class="btn btn btn-info btn-sm shadow" onclick="pagosPorComprobar('{{$key->id}}')">
-                                                    <i data-feather="eye"></i>
+                                            @if(\Auth::user()->tipo_usuario=="Admin")
+                                                <td>{{ $key->apellidos }}, {{ $key->nombres }}</td>
+                                            @endif
+                                            <td>{{ $key2->mes }}</td>
+                                            <td data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">{{ pc_total($key2->id,$anio,$key->id_admin,$key->id) }}
+                                            </td>
+                                            <td>
+                                                @if( status_pagos($key->id,$key2->id,$anio) == "Con deuda")
+                                                    <span class="text-danger">{{ status_pagos($key->id,$key2->id,$anio) }}</span>
+                                                @else()
+                                                    {{ status_pagos($key->id,$key2->id,$anio) }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    @php $idemM=0 @endphp
+                                                    @foreach($key->mr as $key4)
+                                                        @php $idemM=1 @endphp
+                                                        <li>
+                                                            <span data-toggle="tooltip" data-placement="top" title="{{$key4->motivo}}">
+                                                                {{Str::limit($key4->motivo, 23, ' ...')}}
+                                                            </span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                                @if($idemM == 0)
+                                                    Sin Multas/Recargas
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    @php $montoM=0 @endphp
+                                                    @foreach($key->mr as $key4)
+                                                        @php $montoM=1 @endphp
+                                                        <li>{{ $key4->monto }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                @if($montoM == 0)
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <ul>@php $montoS=0 @endphp
+                                                    @foreach($key->mr as $key4)
+                                                        @php $montoS=1 @endphp
+                                                        <li>{{ $key4->pivot->status }}</li>
+                                                    @endforeach
+                                                </ul>
+                                                @if($montoS == 0)
+                                                    -
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a style="border-radius: 5px; width: 100%;" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success"> 
+                                                    <i data-feather="dollar-sign" style="float:left;"></i>
+                                                    <span>Realizar Pago</span>
                                                 </a>
                                             </td>
                                         </tr>
-                                    @endforeach()
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            @else
-                <div class="card" id="pagoResidente">
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Seleccionar Año</label>
-                                    <select class="form-control" name="anio" id="anio_select" onchange="filtro_pagos()">
-                                        @foreach($anio2 as $key)
-                                            @if(date('Y')==$key->anio)
-                                                <option value="{{$key->anio}}" selected>{{$key->anio}}</option>
-                                            @else
-                                                <option value="{{$key->anio}}">{{$key->anio}}</option>
-                                            @endif
-                                        @endforeach()
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Seleccionar Mes</label>
-                                    <select class="form-control" name="mes" id="mes_select" onchange="filtro_pagos()">
-                                        @foreach($meses as $key)
-                                            <option value="{{$key->id}}">{{$key->mes}} - {{$key->monto}}$</option>
-                                        @endforeach()
-                                    </select>
-                                </div>
-                            </div>
-                            <div id="CargandoFiltroPagos" style="display: none;">
-                                <div class="spinner-border text-success m-4" role="status"></div>
-                            </div>
-                        </div>
-                    
-                        <hr>
-                        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
-                            <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
-                                <thead>
-                                    <tr>
-                                        <th>Ítem</th>
-                                        <th>Inmueble</th>
-                                        <th>Mes</th>
-                                        <th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">Monto</th>
-                                        <th>Estado de Pago</th>
-                                        <th>Descripción M/R</th>
-                                        <th>Monto M/R</th>
-                                        <th>Estado de Pago M/R</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $num=0; @endphp
-                                    @foreach($residentes as $key) 
-                                        @foreach($meses as $key2)
-                                            <tr>
-                                                <td>{{$num=$num+1}}</td>
-                                                <td>
-                                                    <ul>
-                                                        @foreach($key->inmuebles as $key2)
-                                                            <li>{{$key2->idem}}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </td>
-                                                @if(\Auth::user()->tipo_usuario=="Admin")
-                                                    <td>{{ $key->apellidos }}, {{ $key->nombres }}</td>
-                                                @endif
-                                                <td>{{ $key2->mes }}</td>
-                                                <td data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">{{ pc_total($key2->id,$anio,$key->id_admin,$key->id) }}
-                                                </td>
-                                                <td>
-                                                    @if( status_pagos($key->id,$key2->id,$anio) == "Con deuda")
-                                                        <span class="text-danger">{{ status_pagos($key->id,$key2->id,$anio) }}</span>
-                                                    @else()
-                                                        {{ status_pagos($key->id,$key2->id,$anio) }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <ul>
-                                                        @php $idemM=0 @endphp
-                                                        @foreach($key->mr as $key4)
-                                                            @php $idemM=1 @endphp
-                                                            <li>
-                                                                <span data-toggle="tooltip" data-placement="top" title="{{$key4->motivo}}">
-                                                                    {{Str::limit($key4->motivo, 23, ' ...')}}
-                                                                </span>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                    @if($idemM == 0)
-                                                        Sin Multas/Recargas
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <ul>
-                                                        @php $montoM=0 @endphp
-                                                        @foreach($key->mr as $key4)
-                                                            @php $montoM=1 @endphp
-                                                            <li>{{ $key4->monto }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                    @if($montoM == 0)
-                                                        -
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <ul>@php $montoS=0 @endphp
-                                                        @foreach($key->mr as $key4)
-                                                            @php $montoS=1 @endphp
-                                                            <li>{{ $key4->pivot->status }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                    @if($montoS == 0)
-                                                        -
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <a style="border-radius: 5px; width: 100%;" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success"> 
-                                                        <i data-feather="dollar-sign" style="float:left;"></i>
-                                                        <span>Realizar Pago</span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            @endif
+            </div>
+        @endif
+    </div> 
 
-        </div>
         @include('pagos.layouts_pagosC.buscarMeses')
     </div>
 

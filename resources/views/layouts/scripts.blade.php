@@ -201,11 +201,13 @@
 		}
 
 		$(".dataTable").DataTable({
+			"pageLength": 50,
 			"paging": true,
             "bPaginate": true,
-			"pageLength": 50,
+            "lengthChange": false,
 			"responsive": true,
       		"autoWidth": true,
+      		"lengthMenu": false,
       		language: {
 		        "decimal": "",
 		        "emptyTable": "No hay información",
@@ -227,10 +229,12 @@
 		});
 
 		$("#tableConsultas").DataTable({
-			"pageLength": 50,
+			"pageLength": 12,
 			"responsive": true,
       		"autoWidth": true,
       		"sort": false,
+      		"bFilter": false,
+      		"paging": false,
       		language: {
 	        "decimal": "",
 	        "emptyTable": "No hay información",
@@ -2111,6 +2115,7 @@
                     );
 
                     //}
+                    $('#vistaPrincipal').fadeIn(500);
                 }
                 else{
                     $('#example1_wrapper').append(

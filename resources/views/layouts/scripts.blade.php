@@ -1091,8 +1091,7 @@
 					for (var i = 0; i < data2.length; i++) {
 
 						if(data2[i].alquiler_status=="En Uso"){
-							if(i>0 && i<12){
-
+							if(i<=12){
 								if(data2[i].status == 'Pendiente'){
 									$('#muestraMesesAPagar').append(
 										'<div class="row">'+
@@ -2079,7 +2078,7 @@
                     	contenido+='<tr>'+
                     			'<td>'+num+1+'</td>'+
                                 '<td><ul id="mis_inmuebles'+i+'"></ul></td>'+
-                                '<td><ul id="id_mis_inmuebles'+i+'"></ul></td>'+
+                                // '<td><ul id="id_mis_inmuebles'+i+'"></ul></td>'+
                                 '<td>'+data[i].nombres+', '+data[i].apellidos+'</td>'+
                                 '<td>'+mostrar_mes(mes)+' '+anio+'</td>'+
                                 '<td data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común"><span id="total_pagar'+i+'"></span></td>'+
@@ -2095,17 +2094,17 @@
                         '<table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">'+
                             '<thead>'+
                                 '<tr>'+
-                                	'<th>Ítem</th>'+
-                                	'<th>Inmueble</th>'+
-                                    '<th>Id de Inmueble</th>'+
-                                    '<th>Residente</th>'+
-                                    '<th>Mes y Año</th>'+
-                                    '<th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">Monto</th>'+
-                                    '<th>Estado de Pago</th>'+
+                                	'<th><center>Ítem</center></th>'+
+                                	'<th><center>Inmueble</center></th>'+
+                                    // '<th>Id de Inmueble</th>'+
+                                    '<th><center>Residente</center></th>'+
+                                    '<th><center>Mes y Año</center></th>'+
+                                    '<th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común"><center>Monto</center></th>'+
+                                    '<th><center>Estado de Pago</center></th>'+
                                     // '<th></th>'+
-                                    '<th>Detalle M/R</th>'+
-                                    '<th>Monto M/R</th>'+
-                                    '<th>Estado de Pago M/R</th>'+
+                                    '<th><center>Detalle M/R</center></th>'+
+                                    '<th><center>Monto M/R</center></th>'+
+                                    '<th><center>Estado de Pago M/R</center></th>'+
                                     // '<th></th>'+
                                 '</tr>'+
                             '</thead>'+
@@ -2122,17 +2121,17 @@
                         '<table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">'+
                             '<thead>'+
                                  '<tr>'+
-                                 	'<th>Ítem</th>'+
-                                	'<th>Inmueble</th>'+
-                                    '<th>Id de Inmueble</th>'+
-                                    '<th>Residente</th>'+
-                                    '<th>Mes y Año</th>'+
-                                    '<th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común">Monto</th>'+
-                                    '<th>Estado de Pago</th>'+
-                                    '<th></th>'+
-                                    '<th>Detalle M/R</th>'+
-                                    '<th>Monto M/R</th>'+
-                                    '<th>Estado de Pago M/R</th>'+
+                                 	'<th><center>Ítem</center></th>'+
+                                	'<th><center>Inmueble</center></th>'+
+                                    // '<th>Id de Inmueble</th>'+
+                                    '<th><center>Residente</center></th>'+
+                                    '<th><center>Mes y Año</center></th>'+
+                                    '<th data-toggle="tooltip" data-placement="top" title="Monto de Gasto Común"><center>Monto</center></th>'+
+                                    '<th><center>Estado de Pago</center></th>'+
+                                    '<th><center></center></th>'+
+                                    '<th><center>Detalle M/R</center></th>'+
+                                    '<th><center>Monto M/R</center></th>'+
+                                    '<th><center>Estado de Pago M/R</center></th>'+
                                     // '<th></th>'+
                                 '</tr>'+
                             '</thead>'+

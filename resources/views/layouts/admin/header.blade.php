@@ -47,6 +47,19 @@
                     </div>
                 </div>
             </div>
+        @elseif(Request::route()->getName() == 'consultas')
+            <h4 class="mb-1 mt-0">Consulta - Pagos de Condominio</h4>
+            <div class="row page-title">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb" class="float-right mt-1">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Consulta</li>
+                            <li class="breadcrumb-item active" aria-current="page">Pagos de Condominio</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
         @endif
 
         <ul class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">

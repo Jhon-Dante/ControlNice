@@ -82,7 +82,7 @@ class ArriendosController extends Controller
             }
         }
         toastr()->success('con éxito!!', $request->opcion.' asignado');
-        return redirect()->to('arriendos');
+        return redirect()->back();
 
     }
 

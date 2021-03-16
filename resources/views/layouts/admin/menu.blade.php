@@ -209,8 +209,9 @@
                             <!-- <a href="{{ url('alquiler') }}"> -->
                             <a href="#" style="color: red">
                                 <i data-feather="columns"></i>
-                                <span> Alquiler de Inst. </span>
+                                <span> Alquiler de Inst. 
                                 <br>¡Próximamente!
+                                </span>
                             </a>
                         </li>
                     @endif
@@ -264,8 +265,9 @@
                                 <!-- <a href="{{ url('contabilidad') }}"> -->
                                 <a href="#" style="color: red">
                                     <i data-feather="activity"></i>
-                                    <span> Balance General </span>
+                                    <span> Balance General 
                                     <br>¡Próximamente!
+                                    </span>
                                 </a>
                             </li>
                         @endif

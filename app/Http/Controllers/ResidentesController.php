@@ -332,7 +332,6 @@ class ResidentesController extends Controller
         ->where('residentes_has_inmuebles.status','En Uso')
         ->select('inmuebles.*','residentes_has_inmuebles.status AS alquiler_status')
         ->get();
-
     }
 
     public function buscar_inmuebles2($id_residente)
@@ -357,10 +356,11 @@ class ResidentesController extends Controller
         ->join('inmuebles','inmuebles.id','=','residentes_has_inmuebles.id_inmueble')
         ->join('mensualidades','mensualidades.id_inmueble','=','inmuebles.id')
         ->join('pagos','pagos.id_mensualidad','=','mensualidades.id')
-        // ->where('inmuebles.id',$id_inmueble)
+        ->where('inmuebles.id',$id_inmueble)
         ->where('mensualidades.anio',$anio)
         ->where('residentes_has_inmuebles.status','En Uso')
         ->select('mensualidades.mes','mensualidades.id','pagos.status','pagos.referencia','residentes_has_inmuebles.status AS alquiler_status')
+        ->groupBy('mensualidades.mes')
         ->get();
 
         $limite_inf=count($consulta)-13;
@@ -371,10 +371,11 @@ class ResidentesController extends Controller
             ->join('inmuebles','inmuebles.id','=','residentes_has_inmuebles.id_inmueble')
             ->join('mensualidades','mensualidades.id_inmueble','=','inmuebles.id')
             ->join('pagos','pagos.id_mensualidad','=','mensualidades.id')
-            // ->where('inmuebles.id',$id_inmueble)
+            ->where('inmuebles.id',$id_inmueble)
             ->where('mensualidades.anio',$anio)
             ->where('residentes_has_inmuebles.status','En Uso')
             ->select('mensualidades.mes','mensualidades.id','pagos.status','pagos.referencia','residentes_has_inmuebles.status AS alquiler_status')
+            ->groupBy('mensualidades.mes')
             ->offset($limite_inf)
             ->limit(12)
             ->get();
@@ -384,10 +385,11 @@ class ResidentesController extends Controller
             ->join('inmuebles','inmuebles.id','=','residentes_has_inmuebles.id_inmueble')
             ->join('mensualidades','mensualidades.id_inmueble','=','inmuebles.id')
             ->join('pagos','pagos.id_mensualidad','=','mensualidades.id')
-            // ->where('inmuebles.id',$id_inmueble)
+            ->where('inmuebles.id',$id_inmueble)
             ->where('mensualidades.anio',$anio)
             ->where('residentes_has_inmuebles.status','En Uso')
             ->select('mensualidades.mes','mensualidades.id','pagos.status','pagos.referencia','residentes_has_inmuebles.status AS alquiler_status')
+            ->groupBy('mensualidades.mes')
             ->get();
         }
         

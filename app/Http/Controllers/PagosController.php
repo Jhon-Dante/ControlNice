@@ -233,7 +233,6 @@ class PagosController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         //dd(count($request->mes));
         if($request->flow==1){
             $request->referencia=$this->generarOrden();
@@ -265,7 +264,7 @@ class PagosController extends Controller
                             foreach ($residente->inmuebles as $key) {
                                 if ($key->pivot->status=="En Uso") {
                                     foreach ($key->mensualidades as $key2) {
-                                        if ($key2->mes==$request->mes[$i]) {
+                                        if ($key2->mes==$request->mes[$i] && $key2->anio==Date('Y')) {
                                             //echo $key2->id."<br>";
                                             $pagos=Pagos::where('id_mensualidad',$key2->id)->orderby('id','DESC')->first();
                                             if(!is_null($pagos)){
@@ -274,10 +273,10 @@ class PagosController extends Controller
                                                     $pi++;
                                                     $total+=$key2->monto;
                                                 } else {
-                                                    if (\Auth::user()->tipo_usuario=="Residente") {
-                                                        $pagos->status="Por Confirmar";
-                                                    } else {
+                                                    if (\Auth::user()->tipo_usuario=="Admin") {
                                                         $pagos->status="Cancelado";
+                                                    } else {
+                                                        $pagos->status="Por Confirmar";
                                                     }
                                                     if ($request->tipo_pago=="Transferencia") {
                                                         $referencia = $request->referencia;
@@ -346,7 +345,7 @@ class PagosController extends Controller
                             foreach ($residente->estacionamientos as $key) {
                                 if ($key->pivot->status=="En Uso") {
                                     foreach ($key->mensualidad as $key2) {
-                                        if ($key2->mes==$request->mes[$i]) {
+                                        if ($key2->mes==$request->mes[$i] && $key2->anio==Date('Y')) {
                                             //echo $key2->id."<br>";
                                             $pagos=PagosE::where('id_mens_estac',$key2->id)->orderby('id','DESC')->first();
                                             if(!is_null($pagos)){
@@ -354,10 +353,10 @@ class PagosController extends Controller
                                                     $pago_e[$pe]=$pagos->id;
                                                     $pe++;
                                                 } else {
-                                                    if (\Auth::user()->tipo_usuario=="Residente") {
-                                                        $pagos->status="Por Confirmar";
-                                                    } else {
+                                                    if (\Auth::user()->tipo_usuario=="Admin") {
                                                         $pagos->status="Cancelado";
+                                                    } else {
+                                                        $pagos->status="Por Confirmar";
                                                     }
                                                     $pagos->save();
                                                     $total+=$key2->monto;
@@ -460,7 +459,7 @@ class PagosController extends Controller
                             foreach ($residente->inmuebles as $key) {
                                 if ($key->pivot->status=="En Uso") {
                                     foreach ($key->mensualidades as $key2) {
-                                        if ($key2->mes==$request->mes[$i]) {
+                                        if ($key2->mes==$request->mes[$i] && $key2->anio==Date('Y')) {
                                             //echo $key2->id."<br>";
                                             $pagos=Pagos::where('id_mensualidad',$key2->id)->orderby('id','DESC')->first();
                                             $pagos->status="Cancelado";
@@ -526,7 +525,7 @@ class PagosController extends Controller
                             foreach ($residente->estacionamientos as $key) {
                                 if ($key->pivot->status=="En Uso") {
                                     foreach ($key->mensualidad as $key2) {
-                                        if ($key2->mes==$request->mes[$i]) {
+                                        if ($key2->mes==$request->mes[$i] && $key2->anio==Date('Y')) {
                                             //echo $key2->id."<br>";
                                             $pagos=PagosE::where('id_mens_estac',$key2->id)->orderby('id','DESC')->first();
                                             $pagos->status="Cancelado";

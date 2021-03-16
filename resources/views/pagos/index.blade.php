@@ -147,7 +147,7 @@
                                                                         </div>
                                                                     </div>--}}
 
-                                                                    <a style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Seleccione para realizar un pago común" href="#" onclick="BMesesResidente('{{$key->id}}')" class=" btn btn-sm btn-success shadow">
+                                                                    <a style="margin-right: 3px;" data-toggle="tooltip" data-placement="top" title="Seleccione para realizar un pago común" href="#" onclick="BMesesResidente('{{$key2->id_residente}}')" class=" btn btn-sm btn-success shadow">
                                                                         <i data-feather="dollar-sign"></i>
                                                                     </a>
                                                                     

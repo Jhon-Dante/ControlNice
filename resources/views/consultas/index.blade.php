@@ -7,18 +7,6 @@
         <input type="hidden" id="colorView" value="#5369f8 !important">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="row page-title">
-                    <div class="col-md-12">
-                        <nav aria-label="breadcrumb" class="float-right mt-1">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Consulta</li>
-                                <li class="breadcrumb-item active" aria-current="page">Pagos de Condominio</li>
-                            </ol>
-                        </nav>
-                        <h4 class="mb-1 mt-0">Consulta - Pagos de Condominio</h4>
-                    </div>
-                </div>
                 @include('flash::message')
                 @if(!empty($errors->all()))
                     <div class="notification is-danger">
@@ -33,7 +21,7 @@
                     </div>
                 @endif
                 @if(\Auth::user()->tipo_usuario != 'Admin')
-                    <div class="row">
+                    <div class="row" style="margin-top: 15px;">
                         <div class="col-md-6 col-xl-6">
                             <div class="card border border-info rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none;">
                                 <input type="hidden" name="id_residente" id="id_reside" value="{{\Auth::user()->id}}">
@@ -112,7 +100,7 @@
         </div>
         @include('flash::message')
         @if(\Auth::user()->tipo_usuario != 'Admin')
-            <div class="card border border-success rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none;">
+            <div class="card border border-success rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none; margin-top: 15px;">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -130,9 +118,12 @@
             </div>
         @endif
 
-        <div class="card border border-primary rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none;">
+        <div class="card border border-primary rounded card-tabla shadow p-3 mb-5 bg-white rounded" style="display: none; margin-top: 15px;">
             <div class="card-body">
                 @if(\Auth::user()->tipo_usuario == 'Admin')
+                    <a href="{{ url('pagos') }}" class="btn btn-info text-white shadow" style="border-radius: 30px;margin-top: -90px;margin-left: -60px;">
+                        <i data-feather="arrow-left-circle"></i>
+                    </a>
                     <span>Año {{ $anio[0] }} / Inmueble(s)
                         (@for($i=0;$i < count($inmuebles); $i++)
                             <strong>{{$inmuebles[$i]->idem}}</strong>
@@ -142,10 +133,6 @@
                         @endfor)
                     vinculado a {{$buscar->nombres}} {{$buscar->apellidos}}.
                     </span><br>
-                    <a href="{{ url('pagos') }}" class="btn btn-info text-white shadow mt-4">
-                        <i data-feather="arrow-left-circle"></i>
-                        Regresar a Pagos de Gasto Común
-                    </a>
                 @endif
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4" style="width: 100% !important;">
                     <table id="tableConsultas" class="table table-bordered table-hover table-striped display nowrap" cellspacing="0" style="width: 100% !important;">
@@ -162,22 +149,18 @@
                                     @if ($status_pago[$i][1] == 'Pendiente') 
                                             <td class="text-warning"><strong>{{ $status_pago[$i][1] }}</strong></td>
                                     @elseif ($status_pago[$i][1] == 'Por Confirmar') 
-                                            <td class="text-warning"><strong>{{ $status_pago[$i][1] }}</strong> <br> CÓDIGO DE TRANS.: <b><br>{{ $status_pago[$i][2] }}</b>
+                                            <td class="text-warning"
                                                 @if(\Auth::user()->tipo_usuario == 'Residente')
-                                                    <br>
-                                                    <button class="btn btn-warning btn-sm" onclick="editarReferenciaCP('{{ $status_pago[$i][3] }}','{{ $status_pago[$i][2] }}')">
-                                                        <span><i data-feather="edit"></i>Editar Código de Trans.</span>
-                                                    </button>
+                                                    onclick="editarReferenciaCP('{{ $status_pago[$i][3] }}','{{ $status_pago[$i][2] }}')"
                                                 @endif
+                                            style="display: flex !important;"><strong>{{ $status_pago[$i][1] }}</strong> <br> CÓDIGO DE TRANS.: <b><br>{{ $status_pago[$i][2] }}</b>
                                             </td>
                                     @elseif ($status_pago[$i][1]== 'Cancelado')
-                                            <td class="text-success"><strong>{{ $status_pago[$i][1] }}</strong> <br> CÓDIGO DE TRANS.: <b><br>{{ $status_pago[$i][2] }}</b>
+                                            <td class="text-success"
                                                 @if(\Auth::user()->tipo_usuario == 'Admin')
-                                                    <br>
-                                                    <button class="btn btn-warning btn-sm" onclick="editarReferenciaCP('{{ $status_pago[$i][3] }}','{{ $status_pago[$i][2] }}')">
-                                                        <span><i data-feather="edit"></i>Editar Código de Trans.</span>
-                                                    </button>
+                                                    onclick="editarReferenciaCP('{{ $status_pago[$i][3] }}','{{ $status_pago[$i][2] }}')"
                                                 @endif
+                                            style="display: flex !important;"><strong>{{ $status_pago[$i][1] }}</strong> <br> CÓDIGO DE TRANS.: <b><br>{{ $status_pago[$i][2] }}</b>
                                             </td>
                                     @else ($status_pago[$i][1]== 'No aplica')
                                             <td class="text-danger"><strong>{{ $status_pago[$i][1] }}</strong></td>

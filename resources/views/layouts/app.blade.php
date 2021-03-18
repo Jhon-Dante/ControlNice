@@ -898,23 +898,27 @@
                                       <div class="modal-body">
                                         <h5 align="center">Meses a pagar</h5>
                                         <hr>
-                                        <div class="row">
-                                          <div class="col-md-12">
-                                            <div class="form-group">
-                                              <label for="tipo_pago">Tipo de pago <b style="color: red;">*</b></label>
-                                              <select name="tipo_pago" id="tipo_pago" required="required" class="form-control" onchange="carg(this);">
-                                                <option value="" disabled>Seleccione tipo de pago...</option>
-                                                @if(\Auth::user()->tipo_usuario=="Admin")
-                                                <option value="Efectivo">Efectivo</option>
-                                                @endif
-                                                @if(\Auth::user()->tipo_usuario!="Admin")
-                                                  <!-- <option value="Transferencia">Transferencia</option> -->
-                                                  <option value="Flow">Flow</option>
-                                                @endif
-                                              </select>
+                                        <center>
+                                          <div class="row">
+                                            <div class="col-md-12">
+                                              <div class="form-group">
+                                                <label for="tipo_pago">Tipo de pago <b style="color: red;">*</b></label>
+                                                {{--<select name="tipo_pago" id="tipo_pago" required="required" class="form-control" onchange="carg(this);">
+                                                  <option value="" disabled>Seleccione tipo de pago...</option>
+                                                  @if(\Auth::user()->tipo_usuario=="Admin")
+                                                  <option value="Efectivo">Efectivo</option>
+                                                  @endif
+                                                  @if(\Auth::user()->tipo_usuario!="Admin")
+                                                    <!-- <option value="Transferencia">Transferencia</option> -->
+                                                    <option value="Flow">Flow</option>
+                                                  @endif
+                                                </select>--}}
+                                                <h3>Efectivo</h3>
+                                                <input type="hidden" name="tipo_pago" value="Efectivo">
+                                              </div>
                                             </div>
                                           </div>
-                                        </div>
+                                        </center>
                                         <hr>
                                         <center>
                                           <div id="muestraMesesAPagar">

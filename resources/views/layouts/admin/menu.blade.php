@@ -171,7 +171,7 @@
 
                             <ul class="nav-second-level mm-collapse" aria-expanded="false">
                                 <li>
-                                    <a href="{{ url('pagos') }}">Pagos de Condominio</a>
+                                    <a href="{{ url('pagos') }}">Pago Gasto Común</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('pagos_multas')}}">Multas/Recargas</a>

@@ -24,7 +24,7 @@
                             </ol>
                         </nav>
                         <div class="row">
-                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Gastos - Gastos Comunes</h4>
+                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h4 class="mb-1 mt-0">Gastos - Gastos Comunes</h4>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                             </ol>
                         </nav>
                         <div class="row">
-                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> <h4 class="mb-1 mt-0">Pagos - Estados de Pagos</h4>
+                            <a class="btn btn-success btn-xs" href="{{ url('home')}}">Volver</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h4 class="mb-1 mt-0">Pagos - Estados de Pagos</h4>
                         </div>
                     </div>
                 </div>

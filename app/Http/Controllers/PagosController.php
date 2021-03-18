@@ -183,11 +183,12 @@ class PagosController extends Controller
     {
         if (!is_null($request->mes)) {
             $id_mes=$request->mes;
+            $meses=Meses::where('id',$id_mes)->get();
         }else{
             $id_mes=0;
+            $meses=Meses::all();
         }
         // dd($id_mes);
-        $meses=Meses::all();
         
         $id_admin=id_admin(\Auth::user()->email);
         $id_admin2=UsersAdmin::find($id_admin);

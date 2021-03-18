@@ -48,11 +48,15 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label>Seleccionar Mes</label>
+                                        <label>Seleccionar Mes</label>{{ Date('m') }}
                                         <select class="form-control select2" multiple name="mes" id="mes_select" onchange="filtro_pagos()">
-                                            <option selected disabled>Seleccionar Mes</option>
+                                            <option disabled>Seleccionar Mes</option>
                                             @foreach($meses as $key)
-                                                <option value="{{$key->id}}">{{$key->mes}}</option>
+                                                @if($key->id == Date('m'))
+                                                    <option value="{{$key->id}}" selected>{{$key->mes}}</option>
+                                                @else
+                                                    <option value="{{$key->id}}">{{$key->mes}}</option>
+                                                @endif
                                             @endforeach()
                                         </select>
                                     </div>
@@ -76,7 +80,8 @@
                                 <table id="example1" class="table table-bordered table-hover table-striped dataTable display nowrap" cellspacing="0" style="width: 100% !important;">
                                     <thead>
                                         <tr>
-                                            <th>Item</th>
+                                            <th>Ítem</th>
+                                            <th>Inmueble</th>
                                             @if(\Auth::user()->tipo_usuario=="Admin")
                                             <th>Residente</th>
                                             @endif
@@ -90,9 +95,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php $num=0; @endphp
                                         @foreach($residentes as $key) 
                                             @foreach($meses as $key2)
                                             <tr>
+                                                <td>{{$num=$num+1}}</td>
                                             <td>
                                                 <ul>
                                                     @foreach($key->inmuebles as $key3)

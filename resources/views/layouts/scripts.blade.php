@@ -31,10 +31,23 @@
 			$('#content-page2').addClass('mb-5').addClass('mt-5');
 			$('#app').addClass('mb-5').addClass('mt-5');
 		});
+		function name_search_table() {
+			$('#searchTable').before('<label>Filtrar por Inmuebles</label>');
+		}
+		setTimeout( function(){
+			name_search_table();
+		}  , 500 );
 	</script>
+	<script type="text/javascript">
+</script>
 @else
 	<script src="{{ asset('plugins/dataTables/dataTables.bootstrap4.min.js') }}" defer></script>
 	<script src="{{ asset('plugins/dataTables/responsive.bootstrap4.min.js') }}" defer></script>
+	<script type="text/javascript">
+	function name_search_table() {
+		$('#searchTable').before('');
+	}
+</script>
 @endif
 
 
@@ -55,6 +68,8 @@
 
 <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script> -->
 <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.jqueryui.min.js"></script> -->
+
+
 
 
 <script type="text/javascript">
@@ -368,7 +383,8 @@
 		$('.multi-collapse').collapse('hide');
 
 	});
-
+	
+	
 	// function paginateButton(){
 	// 	 $('.paginate_button').addClass('btn btn-sm text-dark').attr('onclick="paginateButton();"');
 	// }
@@ -2075,8 +2091,9 @@
                     	buscar_inmuebles(data[i].id,anio,mes,i);
                     	total_pagar(data[i].id,anio,mes,i);
                     	multas(data[i].id,anio,mes,i);
+                    	num++;
                     	contenido+='<tr>'+
-                    			'<td>'+num+1+'</td>'+
+                    			'<td>'+num+'</td>'+
                                 '<td><ul id="mis_inmuebles'+i+'"></ul></td>'+
                                 // '<td><ul id="id_mis_inmuebles'+i+'"></ul></td>'+
                                 '<td>'+data[i].nombres+', '+data[i].apellidos+'</td>'+
@@ -2167,6 +2184,7 @@
                         "previous": "Anterior",
                     }
                 });
+                name_search_table();
             }); 
         }
     }

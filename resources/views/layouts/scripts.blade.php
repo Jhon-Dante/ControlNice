@@ -75,7 +75,11 @@
 <script type="text/javascript">
 
 
-
+ 	$(document).ready(function() {
+        setTimeout( function(){
+        	filtro_pagos();
+        }  , 500 );
+    });
 
 	$(document).ready(function() {
 	    var anunAnioActualMonto= $('#anunAnioActualMonto').val();

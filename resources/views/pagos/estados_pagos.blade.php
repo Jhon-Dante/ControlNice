@@ -532,6 +532,7 @@
 
 
 <script type="text/javascript">
+   
 
     function vistaPagos(opcion) {
         if (opcion == 1) {

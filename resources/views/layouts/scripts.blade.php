@@ -1096,6 +1096,8 @@
 		$('#muestraMesesAPagar').empty();
 		$('#muestraMesesAPagar2').css('display','none');
 		$('#CargandoPagarArriendos').css('display','block');
+
+		var mesS = $('#mes_select').val()-1;
 		var m=f.getMonth();
 
 		$.get("arriendos/"+id_residente+"/buscar_inmuebles2", function(data) {
@@ -1128,7 +1130,7 @@
 						                    	'<div class="form-group">'+
 													'<div class="mt-3">'+
 			                                            '<div class="custom-control custom-checkbox mb-2">'+
-			                                                '<input type="checkbox"  name="mes[]" value="'+data2[i].mes+'" class="custom-control-input" id="customCheck'+i+'" data-parsley-mincheck="1" required>'+
+			                                                '<input type="checkbox" name="mes[]" value="'+data2[i].mes+'" class="custom-control-input" id="customCheck'+i+'" data-parsley-mincheck="1" required>'+
 			                                                '<label class="custom-control-label" for="customCheck'+i+'"></label>'+
 			                                            '</div>'+
 			                                        '</div>'+
@@ -1186,9 +1188,13 @@
 						                '</div>'
 						            );
 								}
+
+								
 							}
 						}//cierre de if de status alquilado
 					}//cierre del for
+
+					$('#customCheck'+mesS).attr('checked',true);
 					// $('#muestraMesesAPagar').append(
 					// 	'<br><div class="row border" style="display:none;" id="referencia_p">'+
 		   //                  '<div class="col-md-12">'+
@@ -2108,6 +2114,12 @@
                                 '<td><ul id="mis_multas'+i+'"></ul></td>'+
                                 '<td><span id="total_multas'+i+'"></span></td>'+
                                 '<td><ul id="mis_status_mr'+i+'"></ul></td>'+
+                                '<td>'+
+                                	'<a style="border-radius: 5px; width: 100%;" href="#" onclick="BMesesResidente('+data[i].id+')" class=" btn btn-sm btn-success">'+
+                                        '<i data-feather="dollar-sign" style="float:left;"></i>'+
+                                        '<span>Realizar Pago</span>'+
+                                    '</a>'+
+                                '</td>'+
                                 // '<td><a href="#" class="btn btn-success btn-sm">Ingresar Pago en Efectivo</a></th>'+
                             '</tr>';
                     }
@@ -2126,6 +2138,7 @@
                                     '<th><center>Detalle M/R</center></th>'+
                                     '<th><center>Monto M/R</center></th>'+
                                     '<th><center>Estado de Pago M/R</center></th>'+
+                                    '<th><center>Opciones</center></th>'+
                                     // '<th></th>'+
                                 '</tr>'+
                             '</thead>'+

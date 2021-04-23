@@ -248,7 +248,11 @@
                                 <label>Seleccionar Mes</label>
                                 <select class="form-control" name="mes" id="mes_select" onchange="filtro_pagos()">
                                     @foreach($meses as $key)
-                                        <option value="{{$key->id}}">{{$key->mes}}</option>
+                                        @if($key->id == Date('m'))
+                                            <option value="{{$key->id}}" selected>{{$key->mes}}</option>
+                                        @else
+                                            <option value="{{$key->id}}">{{$key->mes}}</option>
+                                        @endif
                                     @endforeach()
                                 </select>
                             </div>
